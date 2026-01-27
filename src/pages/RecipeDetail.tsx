@@ -1,11 +1,259 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { getRecipeById } from '@/features/recipes/recipeService';
+import { formatTime, getDifficultyColor, getSpiceEmoji } from '@/features/recipes/recipeService';
+import type { Recipe } from '@/types';
+import './RecipeDetail.css';
 
 const RecipeDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (id) {
+      loadRecipe(id);
+    }
+  }, [id]);
+
+  const loadRecipe = async (recipeId: string) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await getRecipeById(recipeId);
+      setRecipe(data);
+    } catch (err) {
+      console.error('Failed to load recipe:', err);
+      setError('Failed to load recipe. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="recipe-detail-page">
+        <div className="recipe-detail-loading">
+          <div className="loading-spinner">🍳</div>
+          <p>Loading recipe...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !recipe) {
+    return (
+      <div className="recipe-detail-page">
+        <div className="recipe-detail-error">
+          <div className="error-icon">⚠️</div>
+          <h2>Recipe not found</h2>
+          <p>{error || 'This recipe does not exist.'}</p>
+          <Link to="/library" className="btn-back">
+            ← Back to Library
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const totalTime = recipe.total_time_estimate_sec || recipe.time?.total_time_estimate_sec || 0;
+  const servings = recipe.yield_servings ?? recipe.yield?.servings ?? 0;
+  const units = recipe.yield_units ?? recipe.yield?.units ?? 'servings';
+  const difficultyColor = getDifficultyColor(recipe.difficulty);
+  const spiceEmoji = getSpiceEmoji(recipe.spice_level);
+
   return (
-    <div>
-      <h1>Recipe Detail</h1>
-      <p>View recipe details here.</p>
-      <p>This page is under construction. 🚧</p>
+    <div className="recipe-detail-page">
+      {/* Header */}
+      <div className="recipe-detail-header">
+        <button onClick={() => navigate(-1)} className="btn-back-arrow">
+          ← Back
+        </button>
+      </div>
+
+      {/* Hero Section */}
+      <div className="recipe-hero">
+        <div className="recipe-hero-image">
+          {recipe.images?.hero?.url ? (
+            <img src={recipe.images.hero.url} alt={recipe.title} />
+          ) : (
+            <div className="recipe-hero-placeholder">
+              <span className="hero-placeholder-icon">🍽️</span>
+            </div>
+          )}
+        </div>
+
+        <div className="recipe-hero-content">
+          <h1 className="recipe-title">{recipe.title}</h1>
+          
+          {recipe.subtitle && (
+            <p className="recipe-subtitle">{recipe.subtitle}</p>
+          )}
+
+          <div className="recipe-meta">
+            <div className="recipe-meta-item">
+              <span className="meta-icon">⏱️</span>
+              <div>
+                <div className="meta-label">Total Time</div>
+                <div className="meta-value">{formatTime(totalTime)}</div>
+              </div>
+            </div>
+
+            <div className="recipe-meta-item">
+              <span className="meta-icon">👥</span>
+              <div>
+                <div className="meta-label">Servings</div>
+                <div className="meta-value">{servings} {units}</div>
+              </div>
+            </div>
+
+            <div className="recipe-meta-item">
+              <span className="meta-icon">📊</span>
+              <div>
+                <div className="meta-label">Difficulty</div>
+                <div 
+                  className="meta-value"
+                  style={{ color: difficultyColor, fontWeight: 600 }}
+                >
+                  {recipe.difficulty}
+                </div>
+              </div>
+            </div>
+
+            {spiceEmoji && (
+              <div className="recipe-meta-item">
+                <span className="meta-icon">{spiceEmoji}</span>
+                <div>
+                  <div className="meta-label">Spice Level</div>
+                  <div className="meta-value">{recipe.spice_level}</div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {recipe.tags && recipe.tags.length > 0 && (
+            <div className="recipe-tags-section">
+              {recipe.tags.map((tag) => (
+                <span key={tag} className="recipe-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="recipe-actions">
+            <Link to={`/cook/${recipe.id}`} className="btn-primary btn-cook">
+              🍳 Start Cooking
+            </Link>
+            <button className="btn-secondary">
+              ❤️ Save to Favorites
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="recipe-content">
+        {/* Ingredients */}
+        <div className="recipe-section">
+          <h2 className="section-title">📝 Ingredients</h2>
+          
+          {recipe.grocery_list?.sections?.map((section, idx) => (
+            <div key={idx} className="ingredient-section">
+              <h3 className="ingredient-section-title">{section.name}</h3>
+              <ul className="ingredient-list">
+                {section.items?.map((item, itemIdx) => (
+                  <li key={itemIdx} className="ingredient-item">
+                    <span className="ingredient-name">{item.name}</span>
+                    {(item.quantity || item.unit) && (
+                      <span className="ingredient-amount">
+                        {item.quantity && `${item.quantity} `}
+                        {item.unit}
+                      </span>
+                    )}
+                    {item.notes && (
+                      <span className="ingredient-notes">({item.notes})</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Instructions */}
+        <div className="recipe-section">
+          <h2 className="section-title">👨‍🍳 Instructions</h2>
+          
+          {recipe.cooking_countdown_schedule?.steps && 
+           recipe.cooking_countdown_schedule.steps.length > 0 ? (
+            <div className="instructions-list">
+              {recipe.cooking_countdown_schedule.steps.map((step, idx) => (
+                <div key={step.step_id || idx} className="instruction-step">
+                  <div className="step-number">{step.step_number}</div>
+                  <div className="step-content">
+                    <h4 className="step-title">{step.title}</h4>
+                    <p className="step-summary">{step.summary}</p>
+                    
+                    {step.instructions && step.instructions.length > 0 && (
+                      <ul className="step-instructions">
+                        {step.instructions.map((instruction, iIdx) => (
+                          <li key={iIdx}>{instruction}</li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {step.timers && step.timers.length > 0 && (
+                      <div className="step-timers">
+                        {step.timers.map((timer, tIdx) => (
+                          <div key={tIdx} className="timer-badge">
+                            ⏲️ {timer.label}: {formatTime(timer.duration_sec)}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="no-instructions">
+              Detailed cooking instructions will be added soon.
+            </p>
+          )}
+        </div>
+
+        {/* Plating Recommendations */}
+        {recipe.plating_recommendations?.items && 
+         recipe.plating_recommendations.items.length > 0 && (
+          <div className="recipe-section">
+            <h2 className="section-title">🍽️ Plating & Serving</h2>
+            <div className="plating-recommendations">
+              {recipe.plating_recommendations.items.map((plating, idx) => (
+                <div key={idx} className="plating-item">
+                  <h4 className="plating-title">{plating.title}</h4>
+                  <p className="plating-text">{plating.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Notes Section */}
+        <div className="recipe-section">
+          <h2 className="section-title">📔 Personal Notes</h2>
+          <div className="notes-section">
+            <textarea
+              className="notes-textarea"
+              placeholder="Add your personal notes, modifications, or tips here..."
+              rows={4}
+            />
+            <button className="btn-save-notes">Save Notes</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

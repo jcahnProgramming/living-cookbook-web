@@ -1,0 +1,1062 @@
+{
+  "schema_version": "1.0.0",
+  "notes": {
+    "timer_ui": "Where a step includes a timer, the app should display a Start Timer button. Timers include an absolute start offset (seconds from recipe start) to support a scrolling feed.",
+    "time_model": "All timestamps are offsets from T+0 (when the user starts the recipe). Steps can include optional suggested_start_offset_sec to guide the countdown schedule."
+  },
+  "recipe_template": {
+    "id": "string",
+    "title": "string",
+    "yield": {
+      "servings": "number",
+      "units": "string"
+    },
+    "total_time_estimate_sec": "number",
+    "grocery_list": {
+      "sections": [
+        {
+          "name": "string",
+          "items": [
+            {
+              "name": "string",
+              "quantity": "number|null",
+              "unit": "string|null",
+              "notes": "string|null"
+            }
+          ]
+        }
+      ]
+    },
+    "cooking_countdown_schedule": {
+      "steps": [
+        {
+          "step_number": "number",
+          "title": "string",
+          "summary": "string",
+          "instructions": ["string"],
+          "suggested_start_offset_sec": "number",
+          "timers": [
+            {
+              "timer_id": "string",
+              "label": "string",
+              "start_offset_sec": "number",
+              "duration_sec": "number",
+              "auto_start": "boolean",
+              "notes": "string|null"
+            }
+          ],
+          "dependencies": ["string"]
+        }
+      ]
+    },
+    "timers_feed": [
+      {
+        "timer_id": "string",
+        "recipe_step_number": "number",
+        "label": "string",
+        "start_offset_sec": "number",
+        "duration_sec": "number",
+        "end_offset_sec": "number"
+      }
+    ],
+    "plating_recommendations": [
+      {
+        "title": "string",
+        "text": "string",
+        "image": {
+          "url": "string|null",
+          "alt": "string|null"
+        }
+      }
+    ],
+    "nutrition": {
+      "per_serving": {
+        "calories_kcal": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "fiber_g": null,
+        "sugar_g": null,
+        "sodium_mg": null
+      },
+      "notes": "string|null"
+    },
+    "tags": ["string"]
+  },
+  "recipes": [
+    {
+      "id": "recipe_honey_butter_salmon_rice_carrots_v1",
+      "title": "Honey Butter Salmon + Rice with Carrots",
+      "yield": { "servings": 3, "units": "servings" },
+      "total_time_estimate_sec": 1800,
+      "grocery_list": {
+        "sections": [
+          {
+            "name": "Proteins",
+            "items": [
+              { "name": "Salmon fillets", "quantity": 1, "unit": "lb", "notes": "About 454 g" }
+            ]
+          },
+          {
+            "name": "Produce",
+            "items": [
+              { "name": "Carrots", "quantity": 3, "unit": "medium", "notes": "Slice into coins or sticks" },
+              { "name": "Garlic cloves", "quantity": 4, "unit": "cloves", "notes": "Use 3 for sauce; optional 1 for carrots" },
+              { "name": "Lemon", "quantity": 1, "unit": "whole", "notes": "Use 1/2 for sauce; rest optional" },
+              { "name": "Fresh parsley", "quantity": null, "unit": null, "notes": "Optional garnish" }
+            ]
+          },
+          {
+            "name": "Pantry / Condiments",
+            "items": [
+              { "name": "Long-grain white rice", "quantity": 1, "unit": "cup", "notes": "Dry" },
+              { "name": "Honey", "quantity": 3, "unit": "tbsp", "notes": null },
+              { "name": "Soy sauce", "quantity": 2, "unit": "tbsp", "notes": null },
+              { "name": "Butter", "quantity": 3, "unit": "tbsp", "notes": null },
+              { "name": "Olive oil", "quantity": 2, "unit": "tbsp", "notes": "1 tbsp salmon, 1 tbsp carrots" },
+              { "name": "Salt", "quantity": null, "unit": null, "notes": "To taste" },
+              { "name": "Black pepper", "quantity": null, "unit": null, "notes": "To taste" }
+            ]
+          },
+          {
+            "name": "Optional Flavor Boosts (Non-spicy)",
+            "items": [
+              { "name": "Onion powder", "quantity": 0.5, "unit": "tsp", "notes": "Optional" },
+              { "name": "Garlic powder", "quantity": 0.5, "unit": "tsp", "notes": "Optional" }
+            ]
+          }
+        ]
+      },
+      "cooking_countdown_schedule": {
+        "steps": [
+          {
+            "step_number": 1,
+            "title": "Start rice",
+            "summary": "Rinse, boil, then simmer rice.",
+            "instructions": [
+              "Rinse 1 cup dry rice until water runs mostly clear.",
+              "Add rice + 2 cups water + 1/2 tsp salt to a pot and bring to a boil.",
+              "Reduce heat to low, cover, and simmer."
+            ],
+            "suggested_start_offset_sec": 0,
+            "timers": [
+              {
+                "timer_id": "salmon_rice_simmer_15m",
+                "label": "Rice simmer",
+                "start_offset_sec": 0,
+                "duration_sec": 900,
+                "auto_start": false,
+                "notes": "Start when covered simmer begins."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 2,
+            "title": "Prep carrots + sauce ingredients",
+            "summary": "Slice carrots, mince garlic, prep lemon.",
+            "instructions": [
+              "Slice 3 carrots evenly.",
+              "Mince 3 cloves garlic for the sauce.",
+              "Juice 1/2 lemon."
+            ],
+            "suggested_start_offset_sec": 300,
+            "timers": [],
+            "dependencies": ["salmon_rice_simmer_15m"]
+          },
+          {
+            "step_number": 3,
+            "title": "Cook carrots",
+            "summary": "Sauté carrots until tender; optional steam finish.",
+            "instructions": [
+              "Heat 1 tbsp olive oil in a pan over medium heat.",
+              "Add carrots, season with salt and pepper.",
+              "Sauté until tender, stirring occasionally.",
+              "Optional: Add 1–2 tbsp water and cover briefly to steam-soften."
+            ],
+            "suggested_start_offset_sec": 480,
+            "timers": [
+              {
+                "timer_id": "salmon_carrots_saute_10m",
+                "label": "Carrots sauté",
+                "start_offset_sec": 480,
+                "duration_sec": 600,
+                "auto_start": false,
+                "notes": null
+              },
+              {
+                "timer_id": "salmon_carrots_steam_2m_optional",
+                "label": "Carrots steam (optional)",
+                "start_offset_sec": 1080,
+                "duration_sec": 120,
+                "auto_start": false,
+                "notes": "Optional finishing step."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 4,
+            "title": "Rice steam/rest",
+            "summary": "Turn off heat and let rice steam covered.",
+            "instructions": [
+              "When rice simmer is done, turn off heat.",
+              "Keep covered to steam."
+            ],
+            "suggested_start_offset_sec": 900,
+            "timers": [
+              {
+                "timer_id": "salmon_rice_rest_5m",
+                "label": "Rice steam/rest",
+                "start_offset_sec": 900,
+                "duration_sec": 300,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": ["salmon_rice_simmer_15m"]
+          },
+          {
+            "step_number": 5,
+            "title": "Prep salmon",
+            "summary": "Pat dry and season salmon.",
+            "instructions": [
+              "Pat salmon dry with paper towels.",
+              "Season both sides with salt and black pepper."
+            ],
+            "suggested_start_offset_sec": 1080,
+            "timers": [],
+            "dependencies": []
+          },
+          {
+            "step_number": 6,
+            "title": "Sear salmon",
+            "summary": "Sear first side, flip, finish second side.",
+            "instructions": [
+              "Heat 1 tbsp olive oil in a pan over medium-high heat.",
+              "Cook salmon skin-side down (if skin-on) until it releases easily.",
+              "Flip and cook until just done."
+            ],
+            "suggested_start_offset_sec": 1200,
+            "timers": [
+              {
+                "timer_id": "salmon_sear_side1_5m",
+                "label": "Salmon sear (side 1)",
+                "start_offset_sec": 1200,
+                "duration_sec": 300,
+                "auto_start": false,
+                "notes": "If fillets are thick, may need +1–2 minutes."
+              },
+              {
+                "timer_id": "salmon_sear_side2_3m",
+                "label": "Salmon sear (side 2)",
+                "start_offset_sec": 1500,
+                "duration_sec": 180,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 7,
+            "title": "Make honey-butter sauce",
+            "summary": "Melt butter, honey, soy, garlic; finish with lemon.",
+            "instructions": [
+              "Push salmon to the side of the pan (or remove briefly).",
+              "Add butter, honey, soy sauce, and minced garlic; stir until bubbling.",
+              "Add lemon juice and spoon sauce over salmon."
+            ],
+            "suggested_start_offset_sec": 1680,
+            "timers": [
+              {
+                "timer_id": "salmon_sauce_bubble_1m",
+                "label": "Sauce bubble",
+                "start_offset_sec": 1680,
+                "duration_sec": 60,
+                "auto_start": false,
+                "notes": "Keep heat gentle to avoid burning honey."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 8,
+            "title": "Plate and serve",
+            "summary": "Rice base, salmon on top, sauce, carrots on the side.",
+            "instructions": [
+              "Fluff rice with a fork.",
+              "Plate rice, top with salmon, spoon extra sauce.",
+              "Add carrots on the side. Optional parsley garnish."
+            ],
+            "suggested_start_offset_sec": 1740,
+            "timers": [],
+            "dependencies": []
+          }
+        ]
+      },
+      "timers_feed": [
+        {
+          "timer_id": "salmon_rice_simmer_15m",
+          "recipe_step_number": 1,
+          "label": "Rice simmer",
+          "start_offset_sec": 0,
+          "duration_sec": 900,
+          "end_offset_sec": 900
+        },
+        {
+          "timer_id": "salmon_carrots_saute_10m",
+          "recipe_step_number": 3,
+          "label": "Carrots sauté",
+          "start_offset_sec": 480,
+          "duration_sec": 600,
+          "end_offset_sec": 1080
+        },
+        {
+          "timer_id": "salmon_carrots_steam_2m_optional",
+          "recipe_step_number": 3,
+          "label": "Carrots steam (optional)",
+          "start_offset_sec": 1080,
+          "duration_sec": 120,
+          "end_offset_sec": 1200
+        },
+        {
+          "timer_id": "salmon_rice_rest_5m",
+          "recipe_step_number": 4,
+          "label": "Rice steam/rest",
+          "start_offset_sec": 900,
+          "duration_sec": 300,
+          "end_offset_sec": 1200
+        },
+        {
+          "timer_id": "salmon_sear_side1_5m",
+          "recipe_step_number": 6,
+          "label": "Salmon sear (side 1)",
+          "start_offset_sec": 1200,
+          "duration_sec": 300,
+          "end_offset_sec": 1500
+        },
+        {
+          "timer_id": "salmon_sear_side2_3m",
+          "recipe_step_number": 6,
+          "label": "Salmon sear (side 2)",
+          "start_offset_sec": 1500,
+          "duration_sec": 180,
+          "end_offset_sec": 1680
+        },
+        {
+          "timer_id": "salmon_sauce_bubble_1m",
+          "recipe_step_number": 7,
+          "label": "Sauce bubble",
+          "start_offset_sec": 1680,
+          "duration_sec": 60,
+          "end_offset_sec": 1740
+        }
+      ],
+      "plating_recommendations": [
+        {
+          "title": "Classic Bowl Plate",
+          "text": "Scoop rice into a shallow bowl, place salmon on top, spoon sauce over salmon and a little onto rice, carrots on the side. Finish with parsley and a lemon wedge if desired.",
+          "image": { "url": null, "alt": "Rice bowl with glazed salmon and carrots" }
+        },
+        {
+          "title": "Sauce Control Tip",
+          "text": "Serve extra sauce in a small ramekin so each person can drizzle as they like.",
+          "image": { "url": null, "alt": "Small ramekin of honey-butter sauce" }
+        }
+      ],
+      "nutrition": {
+        "per_serving": {
+          "calories_kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "fiber_g": null,
+          "sugar_g": null,
+          "sodium_mg": null
+        },
+        "notes": "Placeholders only. Compute from ingredient weights and brands (soy sauce sodium varies widely)."
+      },
+      "tags": ["dinner", "quick", "non-spicy", "seafood", "stovetop", "weeknight", "gluten-free-optional"]
+    },
+
+    {
+      "id": "recipe_rustic_white_bread_altitude_v1",
+      "title": "Simple Rustic White Bread (Baking + Altitude Notes)",
+      "yield": { "servings": 12, "units": "slices" },
+      "total_time_estimate_sec": 10800,
+      "grocery_list": {
+        "sections": [
+          {
+            "name": "Dry",
+            "items": [
+              { "name": "All-purpose flour", "quantity": 420, "unit": "g", "notes": "About 3 1/2 cups" },
+              { "name": "Active dry yeast", "quantity": 2.25, "unit": "tsp", "notes": "1 packet" },
+              { "name": "Sugar", "quantity": 1, "unit": "tbsp", "notes": null },
+              { "name": "Salt", "quantity": 1.5, "unit": "tsp", "notes": null }
+            ]
+          },
+          {
+            "name": "Wet",
+            "items": [
+              { "name": "Warm water (105–110°F)", "quantity": 1.25, "unit": "cups", "notes": "Not hot; can kill yeast" },
+              { "name": "Olive oil", "quantity": 2, "unit": "tbsp", "notes": null }
+            ]
+          }
+        ]
+      },
+      "cooking_countdown_schedule": {
+        "steps": [
+          {
+            "step_number": 1,
+            "title": "Activate yeast",
+            "summary": "Bloom yeast until foamy.",
+            "instructions": [
+              "Combine warm water + sugar + yeast in a bowl.",
+              "Let sit until foamy."
+            ],
+            "suggested_start_offset_sec": 0,
+            "timers": [
+              {
+                "timer_id": "bread_bloom_10m",
+                "label": "Yeast bloom",
+                "start_offset_sec": 0,
+                "duration_sec": 600,
+                "auto_start": false,
+                "notes": "If not foamy after timer, yeast may be inactive."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 2,
+            "title": "Mix and knead",
+            "summary": "Form dough and knead until smooth.",
+            "instructions": [
+              "Add flour, salt, and olive oil to yeast mixture.",
+              "Mix until shaggy dough forms.",
+              "Knead 8–10 minutes until smoother and elastic."
+            ],
+            "suggested_start_offset_sec": 600,
+            "timers": [
+              {
+                "timer_id": "bread_knead_10m",
+                "label": "Knead dough",
+                "start_offset_sec": 600,
+                "duration_sec": 600,
+                "auto_start": false,
+                "notes": "Mixer option: 5 minutes on low/medium."
+              }
+            ],
+            "dependencies": ["bread_bloom_10m"]
+          },
+          {
+            "step_number": 3,
+            "title": "First rise",
+            "summary": "Rise until roughly doubled (altitude can shorten).",
+            "instructions": [
+              "Place dough in lightly oiled bowl and cover.",
+              "Rise until doubled."
+            ],
+            "suggested_start_offset_sec": 1200,
+            "timers": [
+              {
+                "timer_id": "bread_rise1_60m",
+                "label": "First rise (sea level)",
+                "start_offset_sec": 1200,
+                "duration_sec": 3600,
+                "auto_start": false,
+                "notes": "High altitude guidance: start a 45-minute check timer instead."
+              },
+              {
+                "timer_id": "bread_rise1_check_45m_altitude",
+                "label": "First rise check (high altitude)",
+                "start_offset_sec": 1200,
+                "duration_sec": 2700,
+                "auto_start": false,
+                "notes": "If dough is doubled at check, move on early."
+              }
+            ],
+            "dependencies": ["bread_knead_10m"]
+          },
+          {
+            "step_number": 4,
+            "title": "Shape loaf",
+            "summary": "Punch down, shape, and set on parchment or into pan.",
+            "instructions": [
+              "Punch down dough gently.",
+              "Shape into a round boule or loaf.",
+              "Place on parchment-lined sheet or into a loaf pan."
+            ],
+            "suggested_start_offset_sec": 4800,
+            "timers": [],
+            "dependencies": []
+          },
+          {
+            "step_number": 5,
+            "title": "Second rise",
+            "summary": "Shorter second proof (altitude can shorten).",
+            "instructions": [
+              "Cover shaped loaf.",
+              "Let rise until slightly puffy."
+            ],
+            "suggested_start_offset_sec": 5100,
+            "timers": [
+              {
+                "timer_id": "bread_rise2_30m",
+                "label": "Second rise (sea level)",
+                "start_offset_sec": 5100,
+                "duration_sec": 1800,
+                "auto_start": false,
+                "notes": "High altitude guidance: start a 20-minute check timer instead."
+              },
+              {
+                "timer_id": "bread_rise2_check_20m_altitude",
+                "label": "Second rise check (high altitude)",
+                "start_offset_sec": 5100,
+                "duration_sec": 1200,
+                "auto_start": false,
+                "notes": "If loaf is puffy at check, bake early."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 6,
+            "title": "Bake",
+            "summary": "Bake until golden and hollow-sounding.",
+            "instructions": [
+              "Preheat oven to 375°F (190°C).",
+              "Bake loaf until golden."
+            ],
+            "suggested_start_offset_sec": 6900,
+            "timers": [
+              {
+                "timer_id": "bread_bake_30m",
+                "label": "Bake (sea level)",
+                "start_offset_sec": 6900,
+                "duration_sec": 1800,
+                "auto_start": false,
+                "notes": "High altitude often bakes a bit faster: consider 25 minutes and check."
+              },
+              {
+                "timer_id": "bread_bake_check_25m_altitude",
+                "label": "Bake check (high altitude)",
+                "start_offset_sec": 6900,
+                "duration_sec": 1500,
+                "auto_start": false,
+                "notes": "Check color and internal temp; continue if needed."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 7,
+            "title": "Cool",
+            "summary": "Cool before slicing for best texture.",
+            "instructions": [
+              "Move loaf to a rack.",
+              "Cool before slicing."
+            ],
+            "suggested_start_offset_sec": 8700,
+            "timers": [
+              {
+                "timer_id": "bread_cool_20m",
+                "label": "Cool loaf",
+                "start_offset_sec": 8700,
+                "duration_sec": 1200,
+                "auto_start": false,
+                "notes": "Longer cooling improves crumb structure."
+              }
+            ],
+            "dependencies": []
+          }
+        ]
+      },
+      "timers_feed": [
+        { "timer_id": "bread_bloom_10m", "recipe_step_number": 1, "label": "Yeast bloom", "start_offset_sec": 0, "duration_sec": 600, "end_offset_sec": 600 },
+        { "timer_id": "bread_knead_10m", "recipe_step_number": 2, "label": "Knead dough", "start_offset_sec": 600, "duration_sec": 600, "end_offset_sec": 1200 },
+        { "timer_id": "bread_rise1_60m", "recipe_step_number": 3, "label": "First rise (sea level)", "start_offset_sec": 1200, "duration_sec": 3600, "end_offset_sec": 4800 },
+        { "timer_id": "bread_rise1_check_45m_altitude", "recipe_step_number": 3, "label": "First rise check (high altitude)", "start_offset_sec": 1200, "duration_sec": 2700, "end_offset_sec": 3900 },
+        { "timer_id": "bread_rise2_30m", "recipe_step_number": 5, "label": "Second rise (sea level)", "start_offset_sec": 5100, "duration_sec": 1800, "end_offset_sec": 6900 },
+        { "timer_id": "bread_rise2_check_20m_altitude", "recipe_step_number": 5, "label": "Second rise check (high altitude)", "start_offset_sec": 5100, "duration_sec": 1200, "end_offset_sec": 6300 },
+        { "timer_id": "bread_bake_30m", "recipe_step_number": 6, "label": "Bake (sea level)", "start_offset_sec": 6900, "duration_sec": 1800, "end_offset_sec": 8700 },
+        { "timer_id": "bread_bake_check_25m_altitude", "recipe_step_number": 6, "label": "Bake check (high altitude)", "start_offset_sec": 6900, "duration_sec": 1500, "end_offset_sec": 8400 },
+        { "timer_id": "bread_cool_20m", "recipe_step_number": 7, "label": "Cool loaf", "start_offset_sec": 8700, "duration_sec": 1200, "end_offset_sec": 9900 }
+      ],
+      "plating_recommendations": [
+        {
+          "title": "Warm Slice + Butter",
+          "text": "Slice once cooled. Serve warm with butter, honey, or jam.",
+          "image": { "url": null, "alt": "Rustic bread slices with butter" }
+        },
+        {
+          "title": "Toast Upgrade",
+          "text": "Toast slices and top with olive oil + flaky salt (non-spicy), or make a simple garlic bread.",
+          "image": { "url": null, "alt": "Toasted bread on a plate" }
+        }
+      ],
+      "nutrition": {
+        "per_serving": {
+          "calories_kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "fiber_g": null,
+          "sugar_g": null,
+          "sodium_mg": null
+        },
+        "notes": "Placeholders only. Define serving as 1 slice for calculations."
+      },
+      "tags": ["baking", "bread", "altitude-friendly", "non-spicy", "vegetarian", "budget"]
+    },
+
+    {
+      "id": "recipe_angel_hair_carbonara_v1",
+      "title": "Angel Hair Pasta Carbonara",
+      "yield": { "servings": 3, "units": "servings" },
+      "total_time_estimate_sec": 1500,
+      "grocery_list": {
+        "sections": [
+          {
+            "name": "Pasta",
+            "items": [{ "name": "Angel hair pasta", "quantity": 8, "unit": "oz", "notes": null }]
+          },
+          {
+            "name": "Protein",
+            "items": [{ "name": "Bacon or pancetta", "quantity": 6, "unit": "oz", "notes": "Diced" }]
+          },
+          {
+            "name": "Dairy / Eggs",
+            "items": [
+              { "name": "Eggs", "quantity": 2, "unit": "large", "notes": null },
+              { "name": "Parmesan cheese", "quantity": 0.75, "unit": "cup", "notes": "Grated" }
+            ]
+          },
+          {
+            "name": "Produce / Pantry",
+            "items": [
+              { "name": "Garlic cloves", "quantity": 2, "unit": "cloves", "notes": "Optional but tasty" },
+              { "name": "Black pepper", "quantity": 0.5, "unit": "tsp", "notes": "More to taste" },
+              { "name": "Salt", "quantity": null, "unit": null, "notes": "For pasta water + seasoning" }
+            ]
+          }
+        ]
+      },
+      "cooking_countdown_schedule": {
+        "steps": [
+          {
+            "step_number": 1,
+            "title": "Bring water to boil",
+            "summary": "Get salted pasta water boiling.",
+            "instructions": ["Bring a pot of salted water to a rolling boil."],
+            "suggested_start_offset_sec": 0,
+            "timers": [
+              {
+                "timer_id": "carbonara_water_boil_8m",
+                "label": "Boil water",
+                "start_offset_sec": 0,
+                "duration_sec": 480,
+                "auto_start": false,
+                "notes": "Time varies by stove; timer is a guideline."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 2,
+            "title": "Cook bacon/pancetta",
+            "summary": "Render until crisp; keep fat in pan.",
+            "instructions": [
+              "Dice bacon/pancetta and cook over medium heat until crisp.",
+              "Optionally sauté garlic briefly in the rendered fat."
+            ],
+            "suggested_start_offset_sec": 120,
+            "timers": [
+              {
+                "timer_id": "carbonara_bacon_6m",
+                "label": "Cook bacon/pancetta",
+                "start_offset_sec": 120,
+                "duration_sec": 360,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 3,
+            "title": "Mix egg-cheese sauce",
+            "summary": "Whisk eggs + parmesan + pepper.",
+            "instructions": ["Whisk eggs, parmesan, and black pepper in a bowl until smooth."],
+            "suggested_start_offset_sec": 360,
+            "timers": [],
+            "dependencies": []
+          },
+          {
+            "step_number": 4,
+            "title": "Cook pasta",
+            "summary": "Angel hair cooks fast; reserve pasta water.",
+            "instructions": [
+              "Add angel hair to boiling water and cook until al dente.",
+              "Reserve 1/4 cup pasta water, then drain."
+            ],
+            "suggested_start_offset_sec": 480,
+            "timers": [
+              {
+                "timer_id": "carbonara_pasta_3m",
+                "label": "Cook pasta",
+                "start_offset_sec": 480,
+                "duration_sec": 180,
+                "auto_start": false,
+                "notes": "Check at 2 minutes to avoid overcooking."
+              }
+            ],
+            "dependencies": ["carbonara_water_boil_8m"]
+          },
+          {
+            "step_number": 5,
+            "title": "Combine off heat",
+            "summary": "Toss pasta with bacon; add egg mixture off heat for creaminess.",
+            "instructions": [
+              "Add drained pasta to pan with bacon/pancetta.",
+              "Remove pan from heat.",
+              "Pour in egg-cheese mixture and toss quickly.",
+              "Add small splashes of reserved pasta water until silky."
+            ],
+            "suggested_start_offset_sec": 660,
+            "timers": [
+              {
+                "timer_id": "carbonara_toss_1m",
+                "label": "Toss to emulsify",
+                "start_offset_sec": 660,
+                "duration_sec": 60,
+                "auto_start": false,
+                "notes": "If pan is too hot, eggs can scramble; keep off heat."
+              }
+            ],
+            "dependencies": ["carbonara_bacon_6m", "carbonara_pasta_3m"]
+          }
+        ]
+      },
+      "timers_feed": [
+        { "timer_id": "carbonara_water_boil_8m", "recipe_step_number": 1, "label": "Boil water", "start_offset_sec": 0, "duration_sec": 480, "end_offset_sec": 480 },
+        { "timer_id": "carbonara_bacon_6m", "recipe_step_number": 2, "label": "Cook bacon/pancetta", "start_offset_sec": 120, "duration_sec": 360, "end_offset_sec": 480 },
+        { "timer_id": "carbonara_pasta_3m", "recipe_step_number": 4, "label": "Cook pasta", "start_offset_sec": 480, "duration_sec": 180, "end_offset_sec": 660 },
+        { "timer_id": "carbonara_toss_1m", "recipe_step_number": 5, "label": "Toss to emulsify", "start_offset_sec": 660, "duration_sec": 60, "end_offset_sec": 720 }
+      ],
+      "plating_recommendations": [
+        {
+          "title": "Twirl + Pepper Finish",
+          "text": "Twirl pasta into a mound, sprinkle extra parmesan and lots of black pepper. Serve immediately while glossy.",
+          "image": { "url": null, "alt": "Carbonara plated in a bowl with parmesan" }
+        }
+      ],
+      "nutrition": {
+        "per_serving": {
+          "calories_kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "fiber_g": null,
+          "sugar_g": null,
+          "sodium_mg": null
+        },
+        "notes": "Placeholders only. Bacon/pancetta and parmesan brands change sodium/fat significantly."
+      },
+      "tags": ["dinner", "pasta", "quick", "non-spicy", "italian-inspired", "stovetop"]
+    },
+
+    {
+      "id": "recipe_choc_chip_cookies_v1",
+      "title": "Chocolate Chip Cookies (Baking)",
+      "yield": { "servings": 24, "units": "cookies" },
+      "total_time_estimate_sec": 2700,
+      "grocery_list": {
+        "sections": [
+          {
+            "name": "Baking Basics",
+            "items": [
+              { "name": "All-purpose flour", "quantity": 2.25, "unit": "cups", "notes": null },
+              { "name": "Baking soda", "quantity": 1, "unit": "tsp", "notes": null },
+              { "name": "Salt", "quantity": 0.5, "unit": "tsp", "notes": null }
+            ]
+          },
+          {
+            "name": "Wet / Mix-ins",
+            "items": [
+              { "name": "Butter (softened)", "quantity": 1, "unit": "cup", "notes": "2 sticks" },
+              { "name": "Brown sugar", "quantity": 0.75, "unit": "cup", "notes": null },
+              { "name": "White sugar", "quantity": 0.75, "unit": "cup", "notes": null },
+              { "name": "Eggs", "quantity": 2, "unit": "large", "notes": null },
+              { "name": "Vanilla extract", "quantity": 2, "unit": "tsp", "notes": null },
+              { "name": "Chocolate chips", "quantity": 2, "unit": "cups", "notes": null }
+            ]
+          }
+        ]
+      },
+      "cooking_countdown_schedule": {
+        "steps": [
+          {
+            "step_number": 1,
+            "title": "Preheat oven",
+            "summary": "Get oven ready while mixing.",
+            "instructions": ["Preheat oven to 350°F (175°C). Line baking sheets if desired."],
+            "suggested_start_offset_sec": 0,
+            "timers": [
+              {
+                "timer_id": "cookies_preheat_10m",
+                "label": "Oven preheat (estimate)",
+                "start_offset_sec": 0,
+                "duration_sec": 600,
+                "auto_start": false,
+                "notes": "Time varies by oven; use as a guideline."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 2,
+            "title": "Cream butter and sugars",
+            "summary": "Beat until fluffy.",
+            "instructions": ["Cream butter, brown sugar, and white sugar until fluffy."],
+            "suggested_start_offset_sec": 0,
+            "timers": [
+              {
+                "timer_id": "cookies_cream_3m",
+                "label": "Cream mixture",
+                "start_offset_sec": 0,
+                "duration_sec": 180,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 3,
+            "title": "Add eggs and vanilla",
+            "summary": "Mix until combined.",
+            "instructions": ["Add eggs and vanilla; mix until combined."],
+            "suggested_start_offset_sec": 180,
+            "timers": [
+              {
+                "timer_id": "cookies_mix_eggs_1m",
+                "label": "Mix eggs + vanilla",
+                "start_offset_sec": 180,
+                "duration_sec": 60,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": ["cookies_cream_3m"]
+          },
+          {
+            "step_number": 4,
+            "title": "Add dry ingredients",
+            "summary": "Mix just until no flour pockets.",
+            "instructions": ["Add flour, baking soda, and salt; mix just until combined."],
+            "suggested_start_offset_sec": 240,
+            "timers": [
+              {
+                "timer_id": "cookies_mix_dry_2m",
+                "label": "Mix dry ingredients",
+                "start_offset_sec": 240,
+                "duration_sec": 120,
+                "auto_start": false,
+                "notes": "Avoid overmixing for tender cookies."
+              }
+            ],
+            "dependencies": ["cookies_mix_eggs_1m"]
+          },
+          {
+            "step_number": 5,
+            "title": "Fold in chocolate chips",
+            "summary": "Stir chips evenly through dough.",
+            "instructions": ["Fold chocolate chips into dough until evenly distributed."],
+            "suggested_start_offset_sec": 360,
+            "timers": [
+              {
+                "timer_id": "cookies_fold_chips_1m",
+                "label": "Fold in chips",
+                "start_offset_sec": 360,
+                "duration_sec": 60,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": ["cookies_mix_dry_2m"]
+          },
+          {
+            "step_number": 6,
+            "title": "Scoop dough",
+            "summary": "Portion onto baking sheets.",
+            "instructions": ["Scoop dough onto baking sheets, spacing cookies apart."],
+            "suggested_start_offset_sec": 420,
+            "timers": [],
+            "dependencies": ["cookies_fold_chips_1m"]
+          },
+          {
+            "step_number": 7,
+            "title": "Bake",
+            "summary": "Bake until edges set and centers look slightly soft.",
+            "instructions": ["Bake at 350°F (175°C) until edges are set."],
+            "suggested_start_offset_sec": 540,
+            "timers": [
+              {
+                "timer_id": "cookies_bake_11m",
+                "label": "Bake cookies",
+                "start_offset_sec": 540,
+                "duration_sec": 660,
+                "auto_start": false,
+                "notes": "For chewier cookies, pull at 10–11 minutes."
+              }
+            ],
+            "dependencies": ["cookies_preheat_10m"]
+          },
+          {
+            "step_number": 8,
+            "title": "Cool",
+            "summary": "Let set before moving.",
+            "instructions": ["Cool on sheet briefly, then move to a rack."],
+            "suggested_start_offset_sec": 1200,
+            "timers": [
+              {
+                "timer_id": "cookies_cool_10m",
+                "label": "Cool cookies",
+                "start_offset_sec": 1200,
+                "duration_sec": 600,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": ["cookies_bake_11m"]
+          }
+        ]
+      },
+      "timers_feed": [
+        { "timer_id": "cookies_preheat_10m", "recipe_step_number": 1, "label": "Oven preheat (estimate)", "start_offset_sec": 0, "duration_sec": 600, "end_offset_sec": 600 },
+        { "timer_id": "cookies_cream_3m", "recipe_step_number": 2, "label": "Cream mixture", "start_offset_sec": 0, "duration_sec": 180, "end_offset_sec": 180 },
+        { "timer_id": "cookies_mix_eggs_1m", "recipe_step_number": 3, "label": "Mix eggs + vanilla", "start_offset_sec": 180, "duration_sec": 60, "end_offset_sec": 240 },
+        { "timer_id": "cookies_mix_dry_2m", "recipe_step_number": 4, "label": "Mix dry ingredients", "start_offset_sec": 240, "duration_sec": 120, "end_offset_sec": 360 },
+        { "timer_id": "cookies_fold_chips_1m", "recipe_step_number": 5, "label": "Fold in chips", "start_offset_sec": 360, "duration_sec": 60, "end_offset_sec": 420 },
+        { "timer_id": "cookies_bake_11m", "recipe_step_number": 7, "label": "Bake cookies", "start_offset_sec": 540, "duration_sec": 660, "end_offset_sec": 1200 },
+        { "timer_id": "cookies_cool_10m", "recipe_step_number": 8, "label": "Cool cookies", "start_offset_sec": 1200, "duration_sec": 600, "end_offset_sec": 1800 }
+      ],
+      "plating_recommendations": [
+        {
+          "title": "Cookie Stack",
+          "text": "Stack 3–5 cookies on a small plate with a glass of milk or coffee. Sprinkle a few extra chips on the plate for a polished look.",
+          "image": { "url": null, "alt": "Stack of chocolate chip cookies on a plate" }
+        }
+      ],
+      "nutrition": {
+        "per_serving": {
+          "calories_kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "fiber_g": null,
+          "sugar_g": null,
+          "sodium_mg": null
+        },
+        "notes": "Placeholders only. Define serving as 1 cookie."
+      },
+      "tags": ["dessert", "baking", "cookies", "non-spicy", "kid-friendly", "party"]
+    },
+
+    {
+      "id": "recipe_hot_toddy_v1",
+      "title": "Hot Toddy",
+      "yield": { "servings": 1, "units": "drink" },
+      "total_time_estimate_sec": 300,
+      "grocery_list": {
+        "sections": [
+          {
+            "name": "Liquids",
+            "items": [
+              { "name": "Hot water", "quantity": 1, "unit": "cup", "notes": "Near-boiling" },
+              { "name": "Whiskey or bourbon", "quantity": 1.5, "unit": "oz", "notes": null }
+            ]
+          },
+          {
+            "name": "Flavor",
+            "items": [
+              { "name": "Honey", "quantity": 1, "unit": "tbsp", "notes": "More to taste" },
+              { "name": "Lemon juice", "quantity": 1, "unit": "tbsp", "notes": "Fresh preferred" },
+              { "name": "Cinnamon stick", "quantity": null, "unit": null, "notes": "Optional" }
+            ]
+          }
+        ]
+      },
+      "cooking_countdown_schedule": {
+        "steps": [
+          {
+            "step_number": 1,
+            "title": "Heat water",
+            "summary": "Heat water until steaming hot.",
+            "instructions": ["Heat water until hot (kettle or microwave)."],
+            "suggested_start_offset_sec": 0,
+            "timers": [
+              {
+                "timer_id": "toddy_heat_water_3m",
+                "label": "Heat water",
+                "start_offset_sec": 0,
+                "duration_sec": 180,
+                "auto_start": false,
+                "notes": "Time depends on method."
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "step_number": 2,
+            "title": "Assemble",
+            "summary": "Stir honey, lemon, whiskey; add hot water.",
+            "instructions": [
+              "Add honey, lemon juice, and whiskey to a mug.",
+              "Pour in hot water and stir.",
+              "Add cinnamon stick if using."
+            ],
+            "suggested_start_offset_sec": 180,
+            "timers": [
+              {
+                "timer_id": "toddy_stir_30s",
+                "label": "Stir drink",
+                "start_offset_sec": 180,
+                "duration_sec": 30,
+                "auto_start": false,
+                "notes": null
+              }
+            ],
+            "dependencies": ["toddy_heat_water_3m"]
+          }
+        ]
+      },
+      "timers_feed": [
+        { "timer_id": "toddy_heat_water_3m", "recipe_step_number": 1, "label": "Heat water", "start_offset_sec": 0, "duration_sec": 180, "end_offset_sec": 180 },
+        { "timer_id": "toddy_stir_30s", "recipe_step_number": 2, "label": "Stir drink", "start_offset_sec": 180, "duration_sec": 30, "end_offset_sec": 210 }
+      ],
+      "plating_recommendations": [
+        {
+          "title": "Cozy Mug Serve",
+          "text": "Serve in a warm mug with a lemon wheel on the rim and a cinnamon stick inside (optional).",
+          "image": { "url": null, "alt": "Hot toddy in a mug with lemon and cinnamon" }
+        }
+      ],
+      "nutrition": {
+        "per_serving": {
+          "calories_kcal": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "fiber_g": null,
+          "sugar_g": null,
+          "sodium_mg": null
+        },
+        "notes": "Placeholders only. Alcohol calories and honey sugars drive totals."
+      },
+      "tags": ["drink", "warm", "cocktail", "non-spicy", "winter", "quick"]
+    }
+  ]
+}

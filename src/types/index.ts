@@ -229,6 +229,19 @@ export interface Recipe {
   dietary_flags?: string[];
   equipment?: Equipment[];
   time: TimeEstimate;
+  
+  // Database also has these as flat fields
+  total_time_estimate_sec?: number;
+  prep_time_estimate_sec?: number;
+  cook_time_estimate_sec?: number;
+  active_time_estimate_sec?: number;
+  passive_time_estimate_sec?: number;
+  
+  // Yield as flat fields
+  yield_servings?: number;
+  yield_units?: string;
+  yield_notes?: string;
+  
   grocery_list: GroceryList;
   cooking_countdown_schedule: CookingSchedule;
   timers_feed: {
