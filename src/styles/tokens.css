@@ -1,0 +1,258 @@
+/**
+ * Living Cookbook Design System
+ * Token-based theming with CSS variables
+ * Theme: Warm, Bookish, Modern
+ * Accessibility: WCAG AA compliant, dyslexia-friendly fonts
+ */
+
+:root {
+  /* ========================================
+     COLOR TOKENS
+     ======================================== */
+  
+  /* Primary Colors - Warm, cookbook feel */
+  --color-primary-100: #F5DEB3;
+  --color-primary-200: #DEB887;
+  --color-primary-300: #D2A679;
+  --color-primary-400: #B8936C;
+  --color-primary-500: #8B4513; /* Main brand color */
+  --color-primary-600: #6B3410;
+  --color-primary-700: #4A240B;
+  --color-primary-800: #2C1608;
+  --color-primary-900: #1A0D04;
+
+  /* Secondary Colors - Chocolate accents */
+  --color-secondary-100: #F4E6D7;
+  --color-secondary-200: #E8CDB0;
+  --color-secondary-300: #DCB489;
+  --color-secondary-400: #D09B62;
+  --color-secondary-500: #D2691E; /* Accent color */
+  --color-secondary-600: #A25318;
+  --color-secondary-700: #723B11;
+  --color-secondary-800: #42230A;
+  --color-secondary-900: #120B03;
+
+  /* Neutral Colors - Paper-like backgrounds */
+  --color-neutral-50: #FFFCF7;
+  --color-neutral-100: #FFF8F0;
+  --color-neutral-200: #F5EFE7;
+  --color-neutral-300: #E8E1D5;
+  --color-neutral-400: #D1C7B7;
+  --color-neutral-500: #A59885;
+  --color-neutral-600: #7D6F5D;
+  --color-neutral-700: #5A4E3F;
+  --color-neutral-800: #3A3228;
+  --color-neutral-900: #2C1810;
+
+  /* Success Colors - Natural olive green */
+  --color-success-100: #E8F3D6;
+  --color-success-200: #D1E7AD;
+  --color-success-300: #A8D46F;
+  --color-success-400: #8ABC4B;
+  --color-success-500: #6B8E23;
+  --color-success-600: #55711C;
+  --color-success-700: #3F5415;
+  --color-success-800: #29370E;
+  --color-success-900: #131A07;
+
+  /* Warning Colors */
+  --color-warning-100: #FFF4E6;
+  --color-warning-200: #FFE9CC;
+  --color-warning-300: #FFD699;
+  --color-warning-400: #FFC266;
+  --color-warning-500: #FF9800;
+  --color-warning-600: #CC7A00;
+  --color-warning-700: #995B00;
+  --color-warning-800: #663D00;
+  --color-warning-900: #331E00;
+
+  /* Error Colors */
+  --color-error-100: #FFEBEE;
+  --color-error-200: #FFCDD2;
+  --color-error-300: #EF9A9A;
+  --color-error-400: #E57373;
+  --color-error-500: #D32F2F;
+  --color-error-600: #C62828;
+  --color-error-700: #B71C1C;
+  --color-error-800: #8E0000;
+  --color-error-900: #5F0000;
+
+  /* Semantic Color Mappings */
+  --color-background: var(--color-neutral-50);
+  --color-surface: var(--color-neutral-100);
+  --color-surface-elevated: var(--color-neutral-200);
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-text-tertiary: var(--color-neutral-600);
+  --color-border: var(--color-neutral-300);
+  --color-border-hover: var(--color-neutral-400);
+  --color-divider: var(--color-neutral-200);
+
+  /* Interactive States */
+  --color-interactive-default: var(--color-primary-500);
+  --color-interactive-hover: var(--color-primary-600);
+  --color-interactive-active: var(--color-primary-700);
+  --color-interactive-disabled: var(--color-neutral-400);
+
+  /* ========================================
+     TYPOGRAPHY TOKENS
+     Dyslexia-friendly font choices
+     ======================================== */
+  
+  /* Font Families */
+  --font-family-serif: 'Georgia', 'Cambria', 'Times New Roman', serif;
+  --font-family-sans: 'OpenDyslexic', 'Verdana', 'Tahoma', 'Arial', sans-serif;
+  --font-family-mono: 'Courier New', 'Courier', monospace;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3rem;      /* 48px */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* Letter Spacing - Increased for dyslexia accessibility */
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-normal: 0.02em;
+  --letter-spacing-wide: 0.05em;
+
+  /* ========================================
+     SPACING TOKENS
+     ======================================== */
+  
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+  --spacing-24: 6rem;     /* 96px */
+
+  /* ========================================
+     BORDER RADIUS TOKENS
+     ======================================== */
+  
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-base: 0.5rem;  /* 8px */
+  --radius-md: 0.75rem;   /* 12px */
+  --radius-lg: 1rem;      /* 16px */
+  --radius-xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+
+  /* ========================================
+     SHADOW TOKENS
+     ======================================== */
+  
+  --shadow-xs: 0 1px 2px 0 rgba(44, 24, 16, 0.05);
+  --shadow-sm: 0 2px 4px 0 rgba(44, 24, 16, 0.08);
+  --shadow-base: 0 4px 6px -1px rgba(44, 24, 16, 0.1), 0 2px 4px -1px rgba(44, 24, 16, 0.06);
+  --shadow-md: 0 10px 15px -3px rgba(44, 24, 16, 0.1), 0 4px 6px -2px rgba(44, 24, 16, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(44, 24, 16, 0.1), 0 10px 10px -5px rgba(44, 24, 16, 0.04);
+  --shadow-xl: 0 25px 50px -12px rgba(44, 24, 16, 0.25);
+
+  /* ========================================
+     TRANSITION TOKENS
+     ======================================== */
+  
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+
+  /* ========================================
+     Z-INDEX TOKENS
+     ======================================== */
+  
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-fixed: 1200;
+  --z-modal-backdrop: 1300;
+  --z-modal: 1400;
+  --z-popover: 1500;
+  --z-tooltip: 1600;
+
+  /* ========================================
+     BREAKPOINTS (for reference in JS)
+     ======================================== */
+  
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ========================================
+     COMPONENT-SPECIFIC TOKENS
+     ======================================== */
+  
+  /* Buttons */
+  --button-height-sm: 2rem;
+  --button-height-base: 2.5rem;
+  --button-height-lg: 3rem;
+  --button-padding-x-sm: var(--spacing-3);
+  --button-padding-x-base: var(--spacing-4);
+  --button-padding-x-lg: var(--spacing-6);
+
+  /* Inputs */
+  --input-height-sm: 2rem;
+  --input-height-base: 2.5rem;
+  --input-height-lg: 3rem;
+  --input-padding-x: var(--spacing-3);
+
+  /* Cards */
+  --card-padding: var(--spacing-6);
+  --card-border-width: 1px;
+  --card-shadow: var(--shadow-base);
+
+  /* Navigation */
+  --nav-height: 4rem;
+  --sidebar-width: 16rem;
+}
+
+/* ========================================
+   THEME VARIANTS
+   ======================================== */
+
+/* Dark theme (for future implementation) */
+[data-theme="dark"] {
+  --color-background: var(--color-neutral-900);
+  --color-surface: var(--color-neutral-800);
+  --color-surface-elevated: var(--color-neutral-700);
+  --color-text-primary: var(--color-neutral-50);
+  --color-text-secondary: var(--color-neutral-300);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-border: var(--color-neutral-700);
+  --color-border-hover: var(--color-neutral-600);
+  --color-divider: var(--color-neutral-800);
+}
+
+/* High contrast theme (accessibility) */
+[data-theme="high-contrast"] {
+  --color-text-primary: #000000;
+  --color-background: #FFFFFF;
+  --color-border: #000000;
+  --shadow-base: 0 0 0 2px #000000;
+}
