@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import RecipeDetail from './pages/RecipeDetail';
@@ -12,6 +14,10 @@ import Household from './pages/Household';
 import Marketplace from './pages/Marketplace';
 import MyKitchen from './pages/MyKitchen';
 import NotFound from './pages/NotFound';
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 import './styles/tokens.css';
 import './styles/tokens-extended.css';
 import './styles/global.css';
@@ -19,26 +25,41 @@ import './styles/global.css';
 function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <div className="app">
-          <Navigation />
-          <main className="app__main">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/recipe/:id" element={<RecipeDetail />} />
-              <Route path="/plan" element={<Plan />} />
-              <Route path="/grocery" element={<Grocery />} />
-              <Route path="/household" element={<Household />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/my-kitchen" element={<MyKitchen />} />
-              <Route path="/cooking/:id" element={<CookingMode />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-        </div>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            {/* Public Auth Routes */}
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/signup" element={<SignUp />} />
+            <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+            <Route path="/auth/reset-password" element={<ResetPassword />} />
+
+            {/* Protected Routes */}
+            <Route path="*" element={
+              <ProtectedRoute>
+                <div className="app">
+                  <Navigation />
+                  <main className="app__main">
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/library" element={<Library />} />
+                      <Route path="/recipe/:id" element={<RecipeDetail />} />
+                      <Route path="/plan" element={<Plan />} />
+                      <Route path="/grocery" element={<Grocery />} />
+                      <Route path="/household" element={<Household />} />
+                      <Route path="/marketplace" element={<Marketplace />} />
+                      <Route path="/my-kitchen" element={<MyKitchen />} />
+                      <Route path="/cooking/:id" element={<CookingMode />} />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -1,0 +1,147 @@
+/* Trial Banner Styles */
+
+.trial-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-6);
+  border: 2px solid;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.trial-banner-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+}
+
+.trial-banner-icon {
+  font-size: var(--font-size-2xl);
+  flex-shrink: 0;
+}
+
+.trial-banner-message {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.trial-banner-button {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: none;
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Info level (7+ days remaining) */
+.trial-banner-info {
+  background: var(--color-primary-100);
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-800);
+}
+
+.trial-banner-info .trial-banner-button {
+  background: var(--color-primary-600);
+  color: var(--color-neutral-50);
+}
+
+.trial-banner-info .trial-banner-button:hover {
+  background: var(--color-primary-700);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Warning level (3-6 days remaining) */
+.trial-banner-warning {
+  background: var(--color-warning-100);
+  border-color: var(--color-warning-400);
+  color: var(--color-warning-900);
+}
+
+.trial-banner-warning .trial-banner-button {
+  background: var(--color-warning-600);
+  color: var(--color-neutral-50);
+}
+
+.trial-banner-warning .trial-banner-button:hover {
+  background: var(--color-warning-700);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Critical level (1-2 days remaining) */
+.trial-banner-critical {
+  background: var(--color-error-100);
+  border-color: var(--color-error-400);
+  color: var(--color-error-900);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    border-color: var(--color-error-400);
+  }
+  50% {
+    border-color: var(--color-error-600);
+  }
+}
+
+.trial-banner-critical .trial-banner-button {
+  background: var(--color-error-600);
+  color: var(--color-neutral-50);
+}
+
+.trial-banner-critical .trial-banner-button:hover {
+  background: var(--color-error-700);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Expired */
+.trial-banner-expired {
+  background: var(--color-error-100);
+  border-color: var(--color-error-600);
+  color: var(--color-error-900);
+}
+
+.trial-banner-expired .trial-banner-button {
+  background: var(--color-error-700);
+  color: var(--color-neutral-50);
+}
+
+.trial-banner-expired .trial-banner-button:hover {
+  background: var(--color-error-800);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .trial-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .trial-banner-button {
+    width: 100%;
+  }
+}

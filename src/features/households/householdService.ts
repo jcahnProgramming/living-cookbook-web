@@ -49,17 +49,10 @@ export async function getHousehold(householdId: string): Promise<HouseholdWithMe
 
   if (!household) return null;
 
-  // Fetch members
-  const { data: members, error: membersError } = await supabase
+  // Fetch members with their user info
+  const { data: memberRecords, error: membersError } = await supabase
     .from('household_members')
-    .select(`
-      *,
-      user:user_id (
-        id,
-        email,
-        display_name
-      )
-    `)
+    .select('*')
     .eq('household_id', householdId)
     .order('joined_at', { ascending: true });
 
@@ -68,16 +61,26 @@ export async function getHousehold(householdId: string): Promise<HouseholdWithMe
     throw new Error('Failed to fetch household members');
   }
 
-  // Fetch pending invitations
-  const { data: invitations, error: invitationsError } = await supabase
+  // Fetch user details separately from public.users
+  const members = await Promise.all(
+    (memberRecords || []).map(async (member) => {
+      const { data: userData } = await supabase
+        .from('users')
+        .select('id, email, display_name')
+        .eq('id', member.user_id)
+        .single();
+      
+      return {
+        ...member,
+        user: userData || { id: member.user_id, email: 'Unknown', display_name: 'Unknown User' },
+      };
+    })
+  );
+
+  // Fetch pending invitations with inviter info
+  const { data: invitationRecords, error: invitationsError } = await supabase
     .from('household_invitations')
-    .select(`
-      *,
-      inviter:invited_by (
-        id,
-        display_name
-      )
-    `)
+    .select('*')
     .eq('household_id', householdId)
     .is('accepted_at', null)
     .order('created_at', { ascending: false });
@@ -86,6 +89,22 @@ export async function getHousehold(householdId: string): Promise<HouseholdWithMe
     console.error('Error fetching invitations:', invitationsError);
     // Don't throw - invitations are optional
   }
+
+  // Fetch inviter details separately
+  const invitations = await Promise.all(
+    (invitationRecords || []).map(async (invitation) => {
+      const { data: inviterData } = await supabase
+        .from('users')
+        .select('id, display_name')
+        .eq('id', invitation.invited_by)
+        .single();
+      
+      return {
+        ...invitation,
+        inviter: inviterData || { id: invitation.invited_by, display_name: 'Unknown' },
+      };
+    })
+  );
 
   return {
     ...household,
@@ -111,11 +130,14 @@ export async function userHasHousehold(): Promise<boolean> {
  * Automatically adds creator as owner member and starts 30-day trial
  */
 export async function createHousehold(name: string): Promise<Household> {
-  const { data: { user } } = await supabase.auth.getUser();
+  // Use getSession() which is more reliable than getUser()
+  const { data: { session } } = await supabase.auth.getSession();
   
-  if (!user) {
+  if (!session?.user) {
     throw new Error('User must be authenticated to create a household');
   }
+
+  const user = session.user;
 
   // Create household
   const { data: household, error: householdError } = await supabase
@@ -233,9 +255,9 @@ export async function deleteHousehold(householdId: string): Promise<void> {
  * Leave a household (removes user from household_members)
  */
 export async function leaveHousehold(householdId: string): Promise<void> {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { session } } = await supabase.auth.getSession();
   
-  if (!user) {
+  if (!session?.user) {
     throw new Error('User must be authenticated');
   }
 
@@ -243,7 +265,7 @@ export async function leaveHousehold(householdId: string): Promise<void> {
     .from('household_members')
     .delete()
     .eq('household_id', householdId)
-    .eq('user_id', user.id);
+    .eq('user_id', session.user.id);
 
   if (error) {
     console.error('Error leaving household:', error);
@@ -285,9 +307,9 @@ export async function createInvitation(
   householdId: string,
   email: string
 ): Promise<HouseholdInvitation> {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { session } } = await supabase.auth.getSession();
   
-  if (!user) {
+  if (!session?.user) {
     throw new Error('User must be authenticated');
   }
 
@@ -296,7 +318,7 @@ export async function createInvitation(
     .insert({
       household_id: householdId,
       email: email.toLowerCase().trim(),
-      invited_by: user.id,
+      invited_by: session.user.id,
     })
     .select()
     .single();
@@ -346,11 +368,13 @@ export async function getInvitationByToken(
  * Accept an invitation
  */
 export async function acceptInvitation(token: string): Promise<Household> {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { session } } = await supabase.auth.getSession();
   
-  if (!user) {
+  if (!session?.user) {
     throw new Error('User must be authenticated to accept invitation');
   }
+
+  const user = session.user;
 
   // Get invitation
   const invitation = await getInvitationByToken(token);

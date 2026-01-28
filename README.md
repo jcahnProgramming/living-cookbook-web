@@ -1,256 +1,160 @@
-# Living Cookbook
+# Living Cookbook Web Application
 
-A calm, trust-first digital cookbook and kitchen command center that replaces recipe scrolling with guided cooking, household planning, and intelligent grocery management.
+A calm, trust-first digital cookbook and kitchen command center that replaces recipe scrolling with guided cooking, household planning, and intelligent assistance.
 
-## Product Vision
+## 🎯 Project Vision
 
-Living Cookbook is designed to be a modern kitchen companion that focuses on the actual cooking experience rather than infinite scrolling. Built with a warm, bookish aesthetic and dyslexia-friendly design principles, it provides a distraction-free environment for managing recipes, planning meals, and organizing grocery shopping.
+Living Cookbook is designed to be:
+- **Calm over clutter** - No ads, no infinite feeds, minimal distractions
+- **Trust-first** - Clear controls, no silent changes
+- **Kitchen reality wins** - Built for actual home cooking scenarios
+- **Accessible** - Dyslexia-friendly fonts, WCAG AA compliant
 
-## Technology Stack
+## 🚀 Tech Stack
 
-- **Frontend**: React 18 with TypeScript
-- **Build Tool**: Vite
+- **Frontend**: React 18 + TypeScript + Vite
+- **Styling**: CSS Variables (token-based theming)
+- **State Management**: Zustand
 - **Backend**: Supabase (PostgreSQL + Auth + Storage)
-- **Styling**: Custom CSS with design token system
-- **Deployment**: Web-first, mobile-responsive
+- **Routing**: React Router v6
+- **Hosting**: Vercel
 
-## Design Philosophy
-
-1. **Calm over Clutter** - Minimal UI, generous spacing, no infinite feeds
-2. **Trust-First UX** - Clear actions, reversible changes, no dark patterns
-3. **Kitchen Reality Wins** - Built for real cooking workflows
-4. **Accessibility** - Dyslexia-friendly fonts, high contrast, large tap targets
-5. **No Ads, No Tracking** - Privacy-respecting, subscription-based
-
-## Project Structure
+## 📦 Project Structure
 
 ```
 living-cookbook-web/
 ├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── RecipeCard.tsx
-│   │   ├── MealPlanCalendar.tsx
-│   │   └── GroceryList.tsx
-│   ├── pages/              # Page-level components
-│   │   ├── RecipeLibrary.tsx
-│   │   ├── RecipeDetail.tsx
-│   │   ├── MealPlanner.tsx
-│   │   └── GroceryListPage.tsx
-│   ├── services/           # API and business logic
-│   │   ├── recipeService.ts
-│   │   ├── mealPlanService.ts
-│   │   └── groceryService.ts
-│   ├── types/              # TypeScript definitions
-│   │   └── recipe.ts
-│   ├── styles/             # CSS modules and tokens
-│   │   ├── tokens.css      # Design system variables
-│   │   └── global.css
-│   └── App.tsx
-├── supabase/
-│   └── migrations/         # Database schemas
-└── package.json
+│   ├── components/        # Reusable UI components
+│   │   ├── layout/        # Layout components (Header, Footer, etc.)
+│   │   └── ui/            # Base UI components (Button, Card, etc.)
+│   ├── features/          # Feature-specific modules
+│   ├── lib/               # Utilities, helpers, API clients
+│   ├── pages/             # Page components (routes)
+│   ├── styles/            # Global styles and tokens
+│   │   ├── tokens.css     # Design tokens (colors, spacing, etc.)
+│   │   └── global.css     # Global CSS reset and base styles
+│   ├── types/             # TypeScript type definitions
+│   ├── App.tsx            # Main App component
+│   └── main.tsx           # Application entry point
+├── public/                # Static assets
+├── index.html             # HTML entry point
+├── vite.config.ts         # Vite configuration
+├── tsconfig.json          # TypeScript configuration
+└── package.json           # Dependencies and scripts
 ```
 
-## Completed Features
+## 🛠️ Development Setup
 
-### ✅ Phase 0: Foundations (Completed)
+### Prerequisites
+- Node.js 18+ and npm
 
-**Design System**
-- Token-based CSS architecture with design variables
-- Warm, bookish aesthetic with serif headers and sans-serif body text
-- Dyslexia-friendly fonts (OpenDyslexic, Lexend)
-- Responsive spacing, color, and typography tokens
-- Dark-mode ready color system
+### Installation
 
-**Project Setup**
-- React + TypeScript + Vite configuration
-- Component architecture
-- Routing structure
-- Development workflow established
-
-### ✅ Phase 1: Core Cooking MVP (Completed)
-
-**Recipe Library**
-- Grid-based recipe card layout
-- Recipe filtering and search
-- Beautiful card design with images, titles, and metadata
-- Responsive layout (1-3 columns based on screen size)
-
-**Recipe Detail Pages**
-- Hero section with full-width recipe image
-- Comprehensive recipe metadata (servings, time, difficulty)
-- Organized ingredient lists with quantities and units
-- Step-by-step cooking instructions
-- Navigation between recipes
-
-**Database Integration**
-- Supabase project configured
-- Complete database schema for recipes
-- Recipe service layer with CRUD operations
-- Sample recipes imported (Honey Butter Salmon, Pasta Marinara, Chocolate Chip Cookies, Hot Toddy, Scrambled Eggs)
-
-**Recipe Data Structure**
-Custom JSON template supporting:
-- Multiple images and hero images
-- Detailed metadata (prep time, cook time, servings, difficulty, cuisine)
-- Structured ingredients with quantities, units, and preparation notes
-- Atomic step-by-step instructions
-- Tags and categories
-- Dietary information
-- Equipment requirements
-- Storage and reheating instructions
-
-### ✅ Phase 2: Planning & Groceries (Completed)
-
-**Weekly Meal Planner**
-- Calendar-based weekly view
-- Add recipes to specific days
-- Navigate between weeks (previous/next)
-- Visual recipe cards in calendar slots
-- Persistent meal plans in database
-- Remove recipes from meal plan
-- Clear and intuitive day/date display
-
-**Grocery List System**
-- Automatic ingredient aggregation from meal plans
-- Intelligent quantity combining (e.g., "2 cups + 1 cup = 3 cups")
-- Category-based organization (Proteins, Produce, Pantry, Dairy, Spices, etc.)
-- Interactive checklist with real-time progress tracking
-- Visual progress indicator
-- Check/uncheck individual items
-- Persistent grocery list state
-- Week date range display
-
-**Database Schema Updates**
-- `meal_plans` table with user and week tracking
-- `meal_plan_items` table linking recipes to specific days
-- `grocery_lists` table with aggregated ingredients
-- Row Level Security policies configured for development
-
-## Current Status
-
-**Last Completed**: Phase 2 - Meal Planning & Grocery Lists (Base Functionality)
-
-The application now has a fully functional meal planning workflow:
-1. Users can browse recipes in the library
-2. View detailed recipe information
-3. Add recipes to specific days in the weekly planner
-4. Automatically generate grocery lists from planned meals
-5. Check off items while shopping with progress tracking
-
-**Database**: Connected to Supabase with temporary anonymous access for development
-**Testing**: All features tested and working locally
-
-## Development Workflow
-
-1. **Container Development**: Features built in isolated container environment
-2. **Packaging**: Code packaged as `.tar.gz` files
-3. **Local Extraction**: Extracted to `E:/Programming/recipe-cooking-app/repo/living-cookbook-web`
-4. **Testing**: Features tested locally with real Supabase connection
-5. **Version Control**: Git commits after confirmed working features
-
-## Supabase Configuration
-
-**Project URL**: `https://lgzbrycabgvbvuvybxbh.supabase.co`
-
-**Current Tables**:
-- `recipes` - Recipe storage with JSON structure
-- `meal_plans` - Weekly meal plan tracking
-- `meal_plan_items` - Individual recipe-day assignments
-- `grocery_lists` - Aggregated shopping lists
-
-**Authentication**: Currently using anonymous access for development (will be replaced with proper auth in Phase 1 user accounts)
-
-## Next Steps
-
-The foundation is complete and ready for the next phase of development:
-
-### Phase 2 Enhancements (Planned)
-- Serving size scaling
-- Recipe substitutions
-- Meal plan templates
-- "Repeat last week" functionality
-
-### Phase 2.5: Altitude-Aware Cooking (Planned)
-- Location-based elevation detection
-- Recipe adjustments for high-altitude cooking
-- UI indicators for altitude-adjusted recipes
-
-### Phase 3: Households (Planned)
-- Multi-user household creation
-- Shared meal plans and grocery lists
-- Member invitation system
-- Subscription management
-
-### Phase 4: Premium Volumes (Planned)
-- Recipe volume marketplace
-- One-time purchase system
-- Volume landing pages
-- Household sharing rules
-
-### Phase 5: Personal Recipe Builder (Planned)
-- Create and edit custom recipes
-- Photo upload
-- Structured ingredient and step entry
-- Personal recipe library
-
-## Design Tokens
-
-The application uses a comprehensive design token system:
-
-**Colors**
-- Primary: Warm amber (#D97706)
-- Secondary: Deep brown (#78350F)
-- Neutral grayscale palette
-- Semantic colors (success, warning, error)
-
-**Typography**
-- Headers: Serif (Crimson Text, Georgia fallback)
-- Body: Dyslexia-friendly (OpenDyslexic, Lexend, system fallback)
-- Type scale from xs to 3xl
-
-**Spacing**
-- 8px base unit
-- Scale from xs (4px) to 6xl (96px)
-
-**Component Patterns**
-- Cards with subtle shadows
-- Generous padding and margins
-- High contrast for readability
-- Large tap targets (minimum 44x44px)
-
-## Running Locally
-
+1. Clone the repository
 ```bash
-# Install dependencies
+git clone <your-repo-url>
+cd living-cookbook-web
+```
+
+2. Install dependencies
+```bash
 npm install
+```
 
-# Start development server
+3. Start development server
+```bash
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-## Environment Variables
+The app will open at `http://localhost:3000`
 
-Create a `.env.local` file:
+### Available Scripts
 
-```
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+
+## 🎨 Design System
+
+The project uses a token-based theming system with CSS variables. All design tokens are defined in `src/styles/tokens.css`.
+
+### Color Palette
+- **Primary**: Warm browns (cookbook aesthetic)
+- **Secondary**: Chocolate accents
+- **Neutral**: Paper-like cream backgrounds
+- **Success**: Natural olive green
+
+### Typography
+- **Headers**: Georgia (serif) - Warm, bookish feel
+- **Body**: Verdana (sans-serif) - Dyslexia-friendly
+- **Increased letter spacing**: Better readability
+
+### Key Principles
+- Large tap targets (min 44x44px)
+- Generous spacing
+- Minimal icons
+- Card and shelf layouts
+- WCAG AA contrast minimum
+
+## 📋 Development Phases
+
+### Phase 0: Foundations ✅ (CURRENT)
+- [x] Project initialization
+- [x] Design system setup
+- [x] Type definitions
+- [x] Basic routing structure
+- [ ] Supabase setup
+- [ ] Authentication system
+
+### Phase 1: Core Cooking MVP (NEXT)
+- [ ] User accounts
+- [ ] Browse recipe library
+- [ ] Recipe detail page
+- [ ] Guided cooking mode
+- [ ] Favorites
+- [ ] Personal notes
+
+### Phase 2: Planning & Groceries
+- [ ] Weekly meal planner
+- [ ] Grocery aggregation engine
+- [ ] Serving size scaling
+
+### Future Phases
+- Phase 2.5: Altitude-Aware Cooking
+- Phase 3: Households
+- Phase 4: Premium Volumes
+- Phase 5: Personal Recipe Builder
+- Phase 6: AI Pantry Assistant
+- Phase 6.5: Bakeware Intelligence
+- Phase 7: Marketplace
+- Phase 8: Partner Creator Program
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## Contributing
+## 🧪 Testing
 
-This is a personal project currently in active development. Features are being added in phases following the master build plan.
+Coming soon...
 
-## License
+## 📝 License
 
-Proprietary - All rights reserved
+Internal project - All rights reserved
+
+## 🤝 Contributing
+
+This is a private project currently in development.
+
+## 📧 Contact
+
+For questions or feedback, please create an issue in the repository.
 
 ---
 
-**Last Updated**: January 28, 2026
-**Version**: 0.2.0 (Phase 2 Complete)
-**Status**: Active Development
+**Current Status**: Phase 0 (Foundations) - Setting up project structure
+**Last Updated**: January 27, 2026

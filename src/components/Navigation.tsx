@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import ThemeSwitcher from './ThemeSwitcher';
 import './Navigation.css';
 
@@ -21,6 +22,17 @@ const NAV_ITEMS: NavItem[] = [
 
 const Navigation: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/auth/login');
+    } catch (error) {
+      console.error('Sign out failed:', error);
+    }
+  };
 
   return (
     <nav className="navigation">
@@ -52,6 +64,14 @@ const Navigation: React.FC = () => {
           <Link to="/settings" className="navigation__settings-button" aria-label="Settings">
             <span>⚙️</span>
           </Link>
+          <button 
+            onClick={handleSignOut}
+            className="navigation__signout-button"
+            aria-label="Sign Out"
+            title={`Sign out (${user?.email})`}
+          >
+            <span>🚪</span>
+          </button>
         </div>
       </div>
     </nav>
