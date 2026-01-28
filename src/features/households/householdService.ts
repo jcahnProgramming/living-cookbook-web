@@ -337,16 +337,10 @@ export async function createInvitation(
 export async function getInvitationByToken(
   token: string
 ): Promise<HouseholdInvitation | null> {
-  const { data, error } = await supabase
+  // First, get the invitation without joins
+  const { data: invitation, error } = await supabase
     .from('household_invitations')
-    .select(`
-      *,
-      household:household_id (*),
-      inviter:invited_by (
-        id,
-        display_name
-      )
-    `)
+    .select('*')
     .eq('token', token)
     .is('accepted_at', null)
     .gt('expires_at', new Date().toISOString())
@@ -361,7 +355,27 @@ export async function getInvitationByToken(
     throw new Error('Failed to fetch invitation');
   }
 
-  return data;
+  if (!invitation) return null;
+
+  // Fetch household details separately
+  const { data: household } = await supabase
+    .from('households')
+    .select('*')
+    .eq('id', invitation.household_id)
+    .single();
+
+  // Fetch inviter details separately
+  const { data: inviter } = await supabase
+    .from('users')
+    .select('id, display_name')
+    .eq('id', invitation.invited_by)
+    .single();
+
+  return {
+    ...invitation,
+    household: household || undefined,
+    inviter: inviter || undefined,
+  };
 }
 
 /**

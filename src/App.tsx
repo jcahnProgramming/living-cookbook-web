@@ -11,6 +11,7 @@ import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
 import CookingMode from './pages/CookingMode';
 import Household from './pages/Household';
+import AcceptInvitation from './pages/AcceptInvitation';
 import Marketplace from './pages/Marketplace';
 import MyKitchen from './pages/MyKitchen';
 import NotFound from './pages/NotFound';
@@ -33,6 +34,9 @@ function App() {
             <Route path="/auth/signup" element={<SignUp />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
+
+            {/* Public Invitation Route */}
+            <Route path="/household/join/:token" element={<AcceptInvitation />} />
 
             {/* Protected Routes */}
             <Route path="*" element={

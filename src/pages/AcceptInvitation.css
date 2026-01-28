@@ -1,0 +1,249 @@
+/* Accept Invitation Page Styles */
+
+.accept-invitation-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4);
+  background: var(--color-background);
+}
+
+.invitation-card {
+  width: 100%;
+  max-width: 500px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-8);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.invitation-card--success {
+  border-color: var(--color-success-300);
+  background: linear-gradient(
+    to bottom,
+    var(--color-surface),
+    var(--color-success-50)
+  );
+}
+
+.invitation-card--error {
+  border-color: var(--color-error-300);
+}
+
+/* Icon */
+.invitation-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-4);
+}
+
+.loading-spinner {
+  font-size: 3rem;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-4);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Typography */
+.invitation-card h1 {
+  font-size: var(--font-size-3xl);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.invitation-card p {
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-4) 0;
+  line-height: var(--line-height-relaxed);
+}
+
+/* Details */
+.invitation-details {
+  text-align: left;
+  margin: var(--spacing-6) 0;
+}
+
+.invitation-message {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: var(--spacing-6);
+}
+
+.household-info {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  margin-bottom: var(--spacing-6);
+  text-align: center;
+}
+
+.info-row {
+  padding: var(--spacing-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-2);
+}
+
+.info-value {
+  display: block;
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Benefits */
+.invitation-benefits {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-3);
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.benefits-list li {
+  padding: var(--spacing-2) 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+/* Auth Notice */
+.auth-notice {
+  background: var(--color-primary-100);
+  border: 1px solid var(--color-primary-300);
+  border-radius: var(--radius-base);
+  padding: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.auth-notice p {
+  margin: 0;
+  color: var(--color-primary-700);
+  font-size: var(--font-size-sm);
+}
+
+/* Error Message */
+.error-message {
+  background: var(--color-error-100);
+  border: 1px solid var(--color-error-300);
+  border-radius: var(--radius-base);
+  padding: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-error-700);
+  font-size: var(--font-size-sm);
+}
+
+/* Actions */
+.invitation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.invitation-actions .btn-primary,
+.invitation-actions .btn-secondary {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.invitation-actions .btn-primary {
+  background: var(--color-primary-600);
+  color: var(--color-neutral-50);
+}
+
+.invitation-actions .btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-700);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.invitation-actions .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.invitation-actions .btn-secondary {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.invitation-actions .btn-secondary:hover:not(:disabled) {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+/* Signed In As */
+.signed-in-as {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin: 0;
+}
+
+/* Redirect Message */
+.redirect-message {
+  font-size: var(--font-size-sm);
+  color: var(--color-success-700);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .invitation-card {
+    padding: var(--spacing-6);
+  }
+
+  .invitation-icon {
+    font-size: 3rem;
+  }
+
+  .invitation-card h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .info-value {
+    font-size: var(--font-size-lg);
+  }
+}
