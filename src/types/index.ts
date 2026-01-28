@@ -304,6 +304,69 @@ export interface MealPlan {
 }
 
 // ========================================
+// HOUSEHOLD TYPES
+// ========================================
+
+export type SubscriptionStatus = 'trial' | 'active' | 'cancelled' | 'expired';
+export type HouseholdRole = 'owner' | 'member';
+
+export interface Household {
+  id: string;
+  name: string;
+  owner_id: string;
+  subscription_status: SubscriptionStatus;
+  trial_ends_at: string;
+  subscription_ends_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HouseholdMember {
+  id: string;
+  household_id: string;
+  user_id: string;
+  role: HouseholdRole;
+  joined_at: string;
+  invited_by?: string;
+  // Populated from join
+  user?: {
+    id: string;
+    email: string;
+    display_name?: string;
+  };
+}
+
+export interface HouseholdInvitation {
+  id: string;
+  household_id: string;
+  email: string;
+  token: string;
+  invited_by: string;
+  expires_at: string;
+  accepted_at?: string;
+  created_at: string;
+  // Populated from join
+  household?: Household;
+  inviter?: {
+    id: string;
+    display_name?: string;
+  };
+}
+
+export interface HouseholdWithMembers extends Household {
+  members: HouseholdMember[];
+  pending_invitations?: HouseholdInvitation[];
+}
+
+export interface TrialStatus {
+  is_trial: boolean;
+  days_remaining: number;
+  ends_at: string;
+  is_expired: boolean;
+  needs_upgrade: boolean;
+}
+
+// ========================================
 // GROCERY LIST TYPES
 // ========================================
 
@@ -319,6 +382,8 @@ export interface GroceryListItem {
 
 export interface AggregatedGroceryList {
   id: string;
+  user_id: string;
+  household_id?: string;
   meal_plan_id: string;
   generated_at: string;
   items: GroceryListItem[];
