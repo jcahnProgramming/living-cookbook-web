@@ -1,0 +1,294 @@
+/**
+ * Living Cookbook - Theme Extensions
+ * Extends tokens.css with additional theme variations
+ * Preserves original Warm Bookish design as default
+ */
+
+/* Default theme inherits from tokens.css - no changes needed */
+:root,
+[data-theme="warm-bookish"] {
+  /* Original design is preserved from tokens.css */
+}
+
+/* ========================================
+   COOL NIGHT THEME (Dark Mode)
+   ======================================== */
+[data-theme="cool-night"] {
+  /* Primary - Cool blues */
+  --color-primary-100: #1E293B;
+  --color-primary-200: #334155;
+  --color-primary-300: #475569;
+  --color-primary-400: #64748B;
+  --color-primary-500: #94A3B8;
+  --color-primary-600: #CBD5E1;
+  --color-primary-700: #E2E8F0;
+  --color-primary-800: #F1F5F9;
+  --color-primary-900: #F8FAFC;
+
+  /* Secondary - Deep indigos */
+  --color-secondary-100: #1E1B4B;
+  --color-secondary-200: #312E81;
+  --color-secondary-300: #3730A3;
+  --color-secondary-400: #4338CA;
+  --color-secondary-500: #6366F1;
+  --color-secondary-600: #818CF8;
+  --color-secondary-700: #A5B4FC;
+  --color-secondary-800: #C7D2FE;
+  --color-secondary-900: #E0E7FF;
+
+  /* Neutral - Dark grays */
+  --color-neutral-50: #0F172A;
+  --color-neutral-100: #1E293B;
+  --color-neutral-200: #334155;
+  --color-neutral-300: #475569;
+  --color-neutral-400: #64748B;
+  --color-neutral-500: #94A3B8;
+  --color-neutral-600: #CBD5E1;
+  --color-neutral-700: #E2E8F0;
+  --color-neutral-800: #F1F5F9;
+  --color-neutral-900: #F8FAFC;
+
+  /* Success */
+  --color-success-100: #064E3B;
+  --color-success-200: #065F46;
+  --color-success-300: #047857;
+  --color-success-400: #059669;
+  --color-success-500: #10B981;
+  --color-success-600: #34D399;
+  --color-success-700: #6EE7B7;
+  --color-success-800: #A7F3D0;
+  --color-success-900: #D1FAE5;
+
+  /* Semantic mappings for dark mode */
+  --color-background: #0F172A;
+  --color-surface: #1E293B;
+  --color-surface-elevated: #334155;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-tertiary: #94A3B8;
+  --color-border: #334155;
+  --color-border-hover: #475569;
+  --color-divider: #334155;
+
+  --color-interactive-default: #6366F1;
+  --color-interactive-hover: #818CF8;
+  --color-interactive-active: #A5B4FC;
+}
+
+/* ========================================
+   WINTER FROST THEME
+   ======================================== */
+[data-theme="winter"] {
+  --color-primary-100: #F0F9FF;
+  --color-primary-200: #E0F2FE;
+  --color-primary-300: #BAE6FD;
+  --color-primary-400: #7DD3FC;
+  --color-primary-500: #0EA5E9;
+  --color-primary-600: #0284C7;
+  --color-primary-700: #0369A1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0C4A6E;
+
+  --color-secondary-100: #F8FAFC;
+  --color-secondary-200: #F1F5F9;
+  --color-secondary-300: #E2E8F0;
+  --color-secondary-400: #CBD5E1;
+  --color-secondary-500: #94A3B8;
+  --color-secondary-600: #64748B;
+  --color-secondary-700: #475569;
+  --color-secondary-800: #334155;
+  --color-secondary-900: #1E293B;
+
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F4F4F5;
+  --color-neutral-200: #E4E4E7;
+  --color-neutral-300: #D4D4D8;
+  --color-neutral-400: #A1A1AA;
+  --color-neutral-500: #71717A;
+  --color-neutral-600: #52525B;
+  --color-neutral-700: #3F3F46;
+  --color-neutral-800: #27272A;
+  --color-neutral-900: #18181B;
+
+  /* Semantic mappings */
+  --color-background: #F0F9FF;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F8FAFC;
+  --color-text-primary: #18181B;
+  --color-text-secondary: #3F3F46;
+  --color-text-tertiary: #71717A;
+  --color-border: #E4E4E7;
+  --color-border-hover: #D4D4D8;
+  --color-divider: #E4E4E7;
+
+  --color-interactive-default: #0EA5E9;
+  --color-interactive-hover: #0284C7;
+  --color-interactive-active: #0369A1;
+}
+
+/* ========================================
+   SPRING BLOSSOM THEME
+   ======================================== */
+[data-theme="spring"] {
+  --color-primary-100: #F0FDF4;
+  --color-primary-200: #DCFCE7;
+  --color-primary-300: #BBF7D0;
+  --color-primary-400: #86EFAC;
+  --color-primary-500: #22C55E;
+  --color-primary-600: #16A34A;
+  --color-primary-700: #15803D;
+  --color-primary-800: #166534;
+  --color-primary-900: #14532D;
+
+  --color-secondary-100: #FDF2F8;
+  --color-secondary-200: #FCE7F3;
+  --color-secondary-300: #FBCFE8;
+  --color-secondary-400: #F9A8D4;
+  --color-secondary-500: #EC4899;
+  --color-secondary-600: #DB2777;
+  --color-secondary-700: #BE185D;
+  --color-secondary-800: #9F1239;
+  --color-secondary-900: #831843;
+
+  --color-neutral-50: #FAFAF9;
+  --color-neutral-100: #F5F5F4;
+  --color-neutral-200: #E7E5E4;
+  --color-neutral-300: #D6D3D1;
+  --color-neutral-400: #A8A29E;
+  --color-neutral-500: #78716C;
+  --color-neutral-600: #57534E;
+  --color-neutral-700: #44403C;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1C1917;
+
+  /* Semantic mappings */
+  --color-background: #F0FDF4;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FAFAF9;
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #44403C;
+  --color-text-tertiary: #78716C;
+  --color-border: #E7E5E4;
+  --color-border-hover: #D6D3D1;
+  --color-divider: #E7E5E4;
+
+  --color-interactive-default: #22C55E;
+  --color-interactive-hover: #16A34A;
+  --color-interactive-active: #15803D;
+}
+
+/* ========================================
+   SUMMER SUNSHINE THEME
+   ======================================== */
+[data-theme="summer"] {
+  --color-primary-100: #FEFCE8;
+  --color-primary-200: #FEF9C3;
+  --color-primary-300: #FEF08A;
+  --color-primary-400: #FDE047;
+  --color-primary-500: #EAB308;
+  --color-primary-600: #CA8A04;
+  --color-primary-700: #A16207;
+  --color-primary-800: #854D0E;
+  --color-primary-900: #713F12;
+
+  --color-secondary-100: #FFF7ED;
+  --color-secondary-200: #FFEDD5;
+  --color-secondary-300: #FED7AA;
+  --color-secondary-400: #FDBA74;
+  --color-secondary-500: #F97316;
+  --color-secondary-600: #EA580C;
+  --color-secondary-700: #C2410C;
+  --color-secondary-800: #9A3412;
+  --color-secondary-900: #7C2D12;
+
+  --color-neutral-50: #FAFAF9;
+  --color-neutral-100: #F5F5F4;
+  --color-neutral-200: #E7E5E4;
+  --color-neutral-300: #D6D3D1;
+  --color-neutral-400: #A8A29E;
+  --color-neutral-500: #78716C;
+  --color-neutral-600: #57534E;
+  --color-neutral-700: #44403C;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1C1917;
+
+  /* Semantic mappings */
+  --color-background: #FFFBEB;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FEFCE8;
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #44403C;
+  --color-text-tertiary: #78716C;
+  --color-border: #E7E5E4;
+  --color-border-hover: #D6D3D1;
+  --color-divider: #E7E5E4;
+
+  --color-interactive-default: #EAB308;
+  --color-interactive-hover: #CA8A04;
+  --color-interactive-active: #A16207;
+}
+
+/* ========================================
+   AUTUMN HARVEST THEME
+   ======================================== */
+[data-theme="fall"] {
+  --color-primary-100: #FEF2F2;
+  --color-primary-200: #FEE2E2;
+  --color-primary-300: #FECACA;
+  --color-primary-400: #FCA5A5;
+  --color-primary-500: #DC2626;
+  --color-primary-600: #B91C1C;
+  --color-primary-700: #991B1B;
+  --color-primary-800: #7F1D1D;
+  --color-primary-900: #7F1D1D;
+
+  --color-secondary-100: #FDF8F6;
+  --color-secondary-200: #F2E8E5;
+  --color-secondary-300: #EADDD7;
+  --color-secondary-400: #D2B8B1;
+  --color-secondary-500: #A07856;
+  --color-secondary-600: #865E3C;
+  --color-secondary-700: #6F4E37;
+  --color-secondary-800: #5A3E2B;
+  --color-secondary-900: #4A3222;
+
+  --color-neutral-50: #FAFAF9;
+  --color-neutral-100: #F5F5F4;
+  --color-neutral-200: #E7E5E4;
+  --color-neutral-300: #D6D3D1;
+  --color-neutral-400: #A8A29E;
+  --color-neutral-500: #78716C;
+  --color-neutral-600: #57534E;
+  --color-neutral-700: #44403C;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1C1917;
+
+  /* Semantic mappings */
+  --color-background: #FDF8F6;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F5F5F4;
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #44403C;
+  --color-text-tertiary: #78716C;
+  --color-border: #E7E5E4;
+  --color-border-hover: #D6D3D1;
+  --color-divider: #E7E5E4;
+
+  --color-interactive-default: #DC2626;
+  --color-interactive-hover: #B91C1C;
+  --color-interactive-active: #991B1B;
+}
+
+/* ========================================
+   SMOOTH THEME TRANSITIONS
+   ======================================== */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Prevent transition on initial load */
+body.no-transitions * {
+  transition: none !important;
+}

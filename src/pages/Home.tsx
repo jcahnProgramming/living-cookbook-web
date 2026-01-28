@@ -1,8 +1,8 @@
 import React from 'react';
 
-const HomePage: React.FC = () => {
+const Home: React.FC = () => {
   return (
-    <div>
+    <div style={{ padding: '2rem' }}>
       <h1>Welcome to Living Cookbook</h1>
       <p>A calm, trust-first digital cookbook for home cooks.</p>
       <p>This page is under construction. 🚧</p>
@@ -10,4 +10,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default Home;

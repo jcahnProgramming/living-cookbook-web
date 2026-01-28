@@ -144,8 +144,8 @@
 
 .btn-primary {
   padding: var(--spacing-3) var(--spacing-6);
-  background: var(--color-primary-500);
-  color: white;
+  background: var(--color-primary-600);
+  color: var(--color-neutral-50);
   border: none;
   border-radius: var(--radius-base);
   font-size: var(--font-size-lg);
@@ -159,10 +159,11 @@
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-600);
+  background: var(--color-primary-700);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
   text-decoration: none;
+  color: var(--color-neutral-50);
 }
 
 .btn-secondary {
@@ -278,8 +279,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary-500);
-  color: white;
+  background: var(--color-primary-600);
+  color: var(--color-neutral-50);
   border-radius: 50%;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
@@ -389,8 +390,8 @@
 .btn-save-notes {
   align-self: flex-start;
   padding: var(--spacing-2) var(--spacing-4);
-  background: var(--color-success-500);
-  color: white;
+  background: var(--color-success-600);
+  color: var(--color-neutral-50);
   border: none;
   border-radius: var(--radius-base);
   font-size: var(--font-size-base);
@@ -400,7 +401,7 @@
 }
 
 .btn-save-notes:hover {
-  background: var(--color-success-600);
+  background: var(--color-success-700);
 }
 
 /* Loading & Error States */
@@ -435,8 +436,8 @@
 .btn-back {
   display: inline-block;
   padding: var(--spacing-3) var(--spacing-6);
-  background: var(--color-primary-500);
-  color: white;
+  background: var(--color-primary-600);
+  color: var(--color-neutral-50);
   border-radius: var(--radius-base);
   text-decoration: none;
   font-weight: var(--font-weight-semibold);
@@ -444,7 +445,7 @@
 }
 
 .btn-back:hover {
-  background: var(--color-primary-600);
+  background: var(--color-primary-700);
   text-decoration: none;
 }
 

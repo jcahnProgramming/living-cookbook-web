@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cool-night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Test</title>
+  <link rel="stylesheet" href="src/styles/tokens.css">
+  <link rel="stylesheet" href="src/styles/tokens-extended.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: var(--color-background);
+      color: var(--color-text-primary);
+    }
+    .test-box {
+      padding: 20px;
+      margin: 20px 0;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Theme Test</h1>
+  <div class="test-box">
+    <h2>Current Theme: Cool Night</h2>
+    <p>Background color: var(--color-background)</p>
+    <p>Text color: var(--color-text-primary)</p>
+    <p>Surface color: var(--color-surface)</p>
+  </div>
+  
+  <button onclick="changeTheme('warm-bookish')">Warm Bookish</button>
+  <button onclick="changeTheme('cool-night')">Cool Night</button>
+  <button onclick="changeTheme('winter')">Winter</button>
+  
+  <script>
+    function changeTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      console.log('Theme changed to:', theme);
+      console.log('Background color:', getComputedStyle(document.body).backgroundColor);
+    }
+  </script>
+</body>
+</html>

@@ -1,46 +1,45 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import '@/styles/global.css';
-
-// Placeholder components (we'll create these next)
-import HomePage from '@/pages/Home';
-import LibraryPage from '@/pages/Library';
-import RecipeDetailPage from '@/pages/RecipeDetail';
-import CookingModePage from '@/pages/CookingMode';
-import PlanPage from '@/pages/Plan';
-import GroceryPage from '@/pages/Grocery';
-import MyKitchenPage from '@/pages/MyKitchen';
-import HouseholdPage from '@/pages/Household';
-import MarketplacePage from '@/pages/Marketplace';
-import SettingsPage from '@/pages/Settings';
-import NotFoundPage from '@/pages/NotFound';
-
-// Layout
-import MainLayout from '@/components/layout/MainLayout';
+import { ThemeProvider } from './contexts/ThemeContext';
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import Library from './pages/Library';
+import RecipeDetail from './pages/RecipeDetail';
+import Plan from './pages/Plan';
+import Grocery from './pages/Grocery';
+import Settings from './pages/Settings';
+import CookingMode from './pages/CookingMode';
+import Household from './pages/Household';
+import Marketplace from './pages/Marketplace';
+import MyKitchen from './pages/MyKitchen';
+import NotFound from './pages/NotFound';
+import './styles/tokens.css';
+import './styles/tokens-extended.css';
+import './styles/global.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Main routes with layout */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/library" element={<LibraryPage />} />
-          <Route path="/recipe/:id" element={<RecipeDetailPage />} />
-          <Route path="/plan" element={<PlanPage />} />
-          <Route path="/grocery" element={<GroceryPage />} />
-          <Route path="/kitchen" element={<MyKitchenPage />} />
-          <Route path="/household" element={<HouseholdPage />} />
-          <Route path="/marketplace" element={<MarketplacePage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          
-          {/* 404 */}
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-
-        {/* Cooking mode - full screen, no nav */}
-        <Route path="/cook/:id" element={<CookingModePage />} />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className="app">
+          <Navigation />
+          <main className="app__main">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/recipe/:id" element={<RecipeDetail />} />
+              <Route path="/plan" element={<Plan />} />
+              <Route path="/grocery" element={<Grocery />} />
+              <Route path="/household" element={<Household />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/my-kitchen" element={<MyKitchen />} />
+              <Route path="/cooking/:id" element={<CookingMode />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
