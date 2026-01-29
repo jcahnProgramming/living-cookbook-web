@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { getRecipeById } from '@/features/recipes/recipeService';
 import { formatTime, getDifficultyColor, getSpiceEmoji } from '@/features/recipes/recipeService';
+import RecipeReactions from '@/features/recipes/components/RecipeReactions';
 import type { Recipe } from '@/types';
 import './RecipeDetail.css';
 
@@ -193,6 +194,9 @@ const RecipeDetailPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Recipe Reactions */}
+      <RecipeReactions recipeId={recipe.id} />
 
       {/* Content Section */}
       <div className="recipe-content">

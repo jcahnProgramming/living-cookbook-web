@@ -1,0 +1,95 @@
+.recipe-reactions {
+  padding: var(--spacing-6);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.reactions-label {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.reactions-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
+}
+
+.reaction-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4);
+  min-width: 80px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.reaction-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--color-primary-400);
+  box-shadow: var(--shadow-md);
+}
+
+.reaction-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.reaction-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reaction-btn.active {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-500);
+  border-width: 3px;
+  box-shadow: var(--shadow-md);
+}
+
+.reaction-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.reaction-count {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  min-width: 24px;
+}
+
+.reactions-total {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-2);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .reactions-buttons {
+    gap: var(--spacing-2);
+  }
+
+  .reaction-btn {
+    min-width: 70px;
+    padding: var(--spacing-3);
+  }
+
+  .reaction-icon {
+    font-size: 1.5rem;
+  }
+
+  .reaction-count {
+    font-size: var(--font-size-base);
+  }
+}
