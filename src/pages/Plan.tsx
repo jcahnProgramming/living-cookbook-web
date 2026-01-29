@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { useHousehold } from '@/features/households/hooks/useHousehold';
+import ContextSwitcher from '@/components/ContextSwitcher';
 import {
   getMealPlanForWeek,
   getWeekStart,
@@ -14,6 +17,10 @@ import type { Recipe } from '@/types';
 import './Plan.css';
 
 const PlanPage: React.FC = () => {
+  const { user } = useAuth();
+  const { household } = useHousehold();
+  
+  const [mode, setMode] = useState<'personal' | 'household'>('personal');
   const [currentWeekStart, setCurrentWeekStart] = useState(getWeekStart(new Date()));
   const [mealPlan, setMealPlan] = useState<any>(null);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -21,19 +28,27 @@ const PlanPage: React.FC = () => {
   const [showRecipePicker, setShowRecipePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
+  // Auto-switch to household mode if user has household and no personal plan exists
+  useEffect(() => {
+    if (household && !mealPlan) {
+      setMode('household');
+    }
+  }, [household, mealPlan]);
+
   useEffect(() => {
     loadData();
-  }, [currentWeekStart]);
+  }, [currentWeekStart, mode, user?.id]);
 
   const loadData = async () => {
+    if (!user?.id) return;
+    
     try {
       setIsLoading(true);
       
-      // For now, use a temporary user ID (Phase 3 will add real auth)
-      const tempUserId = '00000000-0000-0000-0000-000000000001';
+      const householdId = mode === 'household' ? household?.id : null;
       
       const [planData, recipesData] = await Promise.all([
-        getMealPlanForWeek(currentWeekStart, tempUserId),
+        getMealPlanForWeek(currentWeekStart, user.id, householdId),
         getRecipes(),
       ]);
       
@@ -44,6 +59,10 @@ const PlanPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleModeChange = (newMode: 'personal' | 'household') => {
+    setMode(newMode);
   };
 
   const handleAddRecipe = async (recipeId: string) => {
@@ -118,10 +137,28 @@ const PlanPage: React.FC = () => {
           <h1>Meal Planner</h1>
           <p>Plan your weekly meals and generate grocery lists</p>
         </div>
-        <Link to="/grocery" className="btn-grocery">
-          🛒 View Grocery List
-        </Link>
+        <div className="plan-header-actions">
+          <ContextSwitcher
+            mode={mode}
+            householdName={household?.name}
+            onModeChange={handleModeChange}
+            disabled={isLoading}
+          />
+          <Link to="/grocery" className="btn-grocery">
+            🛒 View Grocery List
+          </Link>
+        </div>
       </div>
+
+      {/* Context Indicator */}
+      {mode === 'household' && household && (
+        <div className="context-banner context-banner--household">
+          <span className="context-banner-icon">🏠</span>
+          <span className="context-banner-text">
+            Viewing <strong>{household.name}</strong> meal plan - all household members can see and edit
+          </span>
+        </div>
+      )}
 
       {/* Week Navigator */}
       <div className="week-navigator">

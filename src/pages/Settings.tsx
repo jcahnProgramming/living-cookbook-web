@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme, THEME_LABELS, ThemeName } from '../contexts/ThemeContext';
 
 const Settings: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const [autoSyncGrocery, setAutoSyncGrocery] = useState(false);
+
+  // Load auto-sync setting from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('autoSyncGrocery');
+    if (saved !== null) {
+      setAutoSyncGrocery(saved === 'true');
+    }
+  }, []);
+
+  // Save auto-sync setting to localStorage
+  const handleAutoSyncChange = (enabled: boolean) => {
+    setAutoSyncGrocery(enabled);
+    localStorage.setItem('autoSyncGrocery', enabled.toString());
+  };
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -38,6 +53,64 @@ const Settings: React.FC = () => {
               {THEME_LABELS[themeName]}
             </button>
           ))}
+        </div>
+      </section>
+
+      <section style={{ marginTop: '2rem' }}>
+        <h2>Grocery Lists</h2>
+        <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
+          Manage how grocery lists are updated
+        </p>
+        
+        <div style={{
+          padding: '1.5rem',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-base)',
+          background: 'var(--color-surface)',
+          maxWidth: '600px'
+        }}>
+          <label style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            cursor: 'pointer'
+          }}>
+            <input
+              type="checkbox"
+              checked={autoSyncGrocery}
+              onChange={(e) => handleAutoSyncChange(e.target.checked)}
+              style={{
+                width: '20px',
+                height: '20px',
+                cursor: 'pointer'
+              }}
+            />
+            <div>
+              <div style={{ fontWeight: 600, marginBottom: '0.25rem' }}>
+                Auto-sync grocery lists
+              </div>
+              <div style={{ 
+                fontSize: '0.875rem', 
+                color: 'var(--color-text-secondary)' 
+              }}>
+                Automatically update grocery lists when you add or remove recipes from your meal plan
+              </div>
+            </div>
+          </label>
+          
+          {autoSyncGrocery && (
+            <div style={{
+              marginTop: '1rem',
+              padding: '0.75rem',
+              background: 'var(--color-primary-50)',
+              border: '1px solid var(--color-primary-200)',
+              borderRadius: 'var(--radius-base)',
+              fontSize: '0.875rem',
+              color: 'var(--color-primary-800)'
+            }}>
+              ℹ️ <strong>Coming soon!</strong> Auto-sync will automatically regenerate your grocery list when your meal plan changes.
+            </div>
+          )}
         </div>
       </section>
 

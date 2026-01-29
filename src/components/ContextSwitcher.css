@@ -1,0 +1,85 @@
+/* Context Switcher Component Styles */
+
+.context-switcher {
+  display: flex;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  width: fit-content;
+}
+
+.context-switcher--personal-only {
+  cursor: default;
+}
+
+.context-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-base);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.context-option:hover:not(:disabled):not(.context-option--active) {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+}
+
+.context-option--active {
+  background: var(--color-primary-100);
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-semibold);
+  cursor: default;
+}
+
+.context-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.context-icon {
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.context-label {
+  white-space: nowrap;
+}
+
+.context-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .context-switcher {
+    width: 100%;
+  }
+
+  .context-option {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .context-label {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

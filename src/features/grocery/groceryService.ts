@@ -16,10 +16,12 @@ export interface AggregatedItem {
 
 /**
  * Generate grocery list from meal plan
+ * Supports both personal and household lists
  */
 export async function generateGroceryListFromMealPlan(
   mealPlanId: string,
-  userId: string
+  userId: string,
+  householdId?: string | null
 ) {
   try {
     // Get meal plan items with recipes
@@ -45,7 +47,8 @@ export async function generateGroceryListFromMealPlan(
       .insert({
         user_id: userId,
         meal_plan_id: mealPlanId,
-        name: 'Weekly Grocery List',
+        household_id: householdId || null,
+        name: householdId ? 'Household Grocery List' : 'Weekly Grocery List',
       })
       .select()
       .single();
@@ -81,18 +84,32 @@ export async function generateGroceryListFromMealPlan(
 }
 
 /**
- * Get active grocery list for user
+ * Get active grocery list for user in specific context
+ * Context can be personal (householdId = null) or household-specific
+ * For household lists, we query by household_id (shared among all members)
+ * For personal lists, we query by user_id
  */
-export async function getActiveGroceryList(userId: string) {
+export async function getActiveGroceryList(userId: string, householdId?: string | null) {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from('grocery_lists')
       .select(`
         *,
         items:grocery_list_items (*)
       `)
-      .eq('user_id', userId)
-      .eq('is_active', true)
+      .eq('is_active', true);
+
+    // Filter by context
+    if (householdId) {
+      // Household mode: query by household_id only
+      // This returns the SAME list for all household members
+      query = query.eq('household_id', householdId);
+    } else {
+      // Personal mode: query by user_id AND null household_id
+      query = query.eq('user_id', userId).is('household_id', null);
+    }
+
+    const { data, error } = await query
       .order('created_at', { ascending: false })
       .limit(1)
       .single();

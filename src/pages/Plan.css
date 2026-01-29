@@ -7,7 +7,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--spacing-8);
+  margin-bottom: var(--spacing-6);
+  gap: var(--spacing-4);
 }
 
 .plan-header h1 {
@@ -21,6 +22,39 @@
   margin: 0;
 }
 
+.plan-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+/* Context Banner */
+.context-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+  border-radius: var(--radius-base);
+  border: 1px solid;
+  font-size: var(--font-size-sm);
+}
+
+.context-banner--household {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-800);
+}
+
+.context-banner-icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+.context-banner-text {
+  flex: 1;
+}
+
 .btn-grocery {
   padding: var(--spacing-3) var(--spacing-6);
   background: var(--color-success-600);
@@ -32,6 +66,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2);
+  white-space: nowrap;
 }
 
 .btn-grocery:hover {

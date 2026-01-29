@@ -7,11 +7,16 @@ import { supabase } from '@/lib/supabase';
 
 /**
  * Get or create meal plan for a specific week
+ * Can be personal (householdId = null) or household-shared
  */
-export async function getMealPlanForWeek(weekStartDate: string, userId: string) {
+export async function getMealPlanForWeek(
+  weekStartDate: string, 
+  userId: string,
+  householdId?: string | null
+) {
   try {
-    // Try to get existing meal plan
-    const { data: existingPlan, error: fetchError } = await supabase
+    // Build query to get existing meal plan
+    let query = supabase
       .from('meal_plans')
       .select(`
         *,
@@ -20,8 +25,16 @@ export async function getMealPlanForWeek(weekStartDate: string, userId: string) 
           recipe:recipes (*)
         )
       `)
-      .eq('week_start_date', weekStartDate)
-      .single();
+      .eq('week_start_date', weekStartDate);
+
+    // Filter by household context
+    if (householdId) {
+      query = query.eq('household_id', householdId);
+    } else {
+      query = query.eq('user_id', userId).is('household_id', null);
+    }
+
+    const { data: existingPlan, error: fetchError } = await query.single();
 
     if (existingPlan) {
       return existingPlan;
@@ -34,6 +47,7 @@ export async function getMealPlanForWeek(weekStartDate: string, userId: string) 
         .insert({
           user_id: userId,
           week_start_date: weekStartDate,
+          household_id: householdId || null,
         })
         .select(`
           *,
