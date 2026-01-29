@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getRecipes } from '@/features/recipes/recipeService';
 import RecipeCard from '@/features/recipes/components/RecipeCard';
 import type { Recipe } from '@/types';
@@ -78,8 +79,13 @@ const LibraryPage: React.FC = () => {
   return (
     <div className="library-page">
       <div className="library-header">
-        <h1>Recipe Library</h1>
-        <p>Browse {recipes.length} delicious recipe{recipes.length !== 1 ? 's' : ''}</p>
+        <div>
+          <h1>Recipe Library</h1>
+          <p>Browse {recipes.length} delicious recipe{recipes.length !== 1 ? 's' : ''}</p>
+        </div>
+        <Link to="/recipe/create" className="btn-create-recipe">
+          ✨ Create Recipe
+        </Link>
       </div>
 
       <div className="library-grid">

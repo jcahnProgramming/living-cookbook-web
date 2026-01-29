@@ -69,7 +69,12 @@ export async function getRecipeById(id: string) {
   try {
     const { data, error } = await supabase
       .from('recipes')
-      .select('*')
+      .select(`
+        *,
+        ingredients:recipe_ingredients(*),
+        steps:recipe_steps(*),
+        photos:recipe_photos(*)
+      `)
       .eq('id', id)
       .single();
 

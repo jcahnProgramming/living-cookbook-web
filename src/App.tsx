@@ -6,6 +6,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import RecipeDetail from './pages/RecipeDetail';
+import RecipeBuilder from './pages/RecipeBuilder';
+import RecipeEditor from './pages/RecipeEditor';
 import Plan from './pages/Plan';
 import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
@@ -48,6 +50,8 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/library" element={<Library />} />
                       <Route path="/recipe/:id" element={<RecipeDetail />} />
+                      <Route path="/recipe/create" element={<RecipeBuilder />} />
+                      <Route path="/recipe/edit/:id" element={<RecipeEditor />} />
                       <Route path="/plan" element={<Plan />} />
                       <Route path="/grocery" element={<Grocery />} />
                       <Route path="/household" element={<Household />} />
