@@ -211,6 +211,14 @@
   box-shadow: var(--shadow-sm);
 }
 
+.meal-thumbnail {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-base);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
 .meal-content {
   flex: 1;
   min-width: 0;

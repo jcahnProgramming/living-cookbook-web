@@ -102,13 +102,13 @@ const Settings: React.FC = () => {
             <div style={{
               marginTop: '1rem',
               padding: '0.75rem',
-              background: 'var(--color-primary-50)',
-              border: '1px solid var(--color-primary-200)',
+              background: 'var(--color-success-50)',
+              border: '1px solid var(--color-success-200)',
               borderRadius: 'var(--radius-base)',
               fontSize: '0.875rem',
-              color: 'var(--color-primary-800)'
+              color: 'var(--color-success-800)'
             }}>
-              ℹ️ <strong>Coming soon!</strong> Auto-sync will automatically regenerate your grocery list when your meal plan changes.
+              ✅ <strong>Active!</strong> Grocery lists will automatically update when you change your meal plan.
             </div>
           )}
         </div>

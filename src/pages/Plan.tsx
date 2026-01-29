@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useHousehold } from '@/features/households/hooks/useHousehold';
+import { useAutoSyncGrocery } from '@/hooks/useAutoSyncGrocery';
 import ContextSwitcher from '@/components/ContextSwitcher';
+import MealPlanActivity from '@/components/MealPlanActivity';
 import {
   getMealPlanForWeek,
   getWeekStart,
@@ -27,6 +29,27 @@ const PlanPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showRecipePicker, setShowRecipePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [autoSyncEnabled, setAutoSyncEnabled] = useState(false);
+
+  // Load auto-sync setting from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('autoSyncGrocery');
+    setAutoSyncEnabled(saved === 'true');
+  }, []);
+
+  // Auto-sync grocery list when meal plan changes
+  const { isSyncing, triggerSync } = useAutoSyncGrocery({
+    mealPlanId: mealPlan?.id || null,
+    userId: user?.id || null,
+    householdId: mode === 'household' ? household?.id || null : null,
+    enabled: autoSyncEnabled,
+    onSyncComplete: () => {
+      console.log('✅ Grocery list auto-synced!');
+    },
+    onSyncError: (error) => {
+      console.error('❌ Auto-sync failed:', error);
+    },
+  });
 
   // Auto-switch to household mode if user has household and no personal plan exists
   useEffect(() => {
@@ -73,6 +96,11 @@ const PlanPage: React.FC = () => {
       await loadData();
       setShowRecipePicker(false);
       setSelectedDate(null);
+      
+      // Trigger auto-sync if enabled
+      if (autoSyncEnabled) {
+        triggerSync();
+      }
     } catch (error) {
       console.error('Failed to add recipe:', error);
     }
@@ -82,6 +110,11 @@ const PlanPage: React.FC = () => {
     try {
       await removeRecipeFromMealPlan(itemId);
       await loadData();
+      
+      // Trigger auto-sync if enabled
+      if (autoSyncEnabled) {
+        triggerSync();
+      }
     } catch (error) {
       console.error('Failed to remove recipe:', error);
     }
@@ -156,9 +189,17 @@ const PlanPage: React.FC = () => {
           <span className="context-banner-icon">🏠</span>
           <span className="context-banner-text">
             Viewing <strong>{household.name}</strong> meal plan - all household members can see and edit
+            {autoSyncEnabled && isSyncing && (
+              <span style={{ marginLeft: '1rem', fontSize: '0.875rem', opacity: 0.8 }}>
+                🔄 Syncing grocery list...
+              </span>
+            )}
           </span>
         </div>
       )}
+
+      {/* Activity Indicator */}
+      <MealPlanActivity mealPlan={mealPlan} />
 
       {/* Week Navigator */}
       <div className="week-navigator">
@@ -196,6 +237,13 @@ const PlanPage: React.FC = () => {
                 {recipesForDay.length > 0 ? (
                   recipesForDay.map((item: any) => (
                     <div key={item.id} className="meal-item">
+                      {item.recipe?.thumbnail_url && (
+                        <img 
+                          src={item.recipe.thumbnail_url} 
+                          alt={item.recipe.title}
+                          className="meal-thumbnail"
+                        />
+                      )}
                       <div className="meal-content">
                         <Link to={`/recipe/${item.recipe_id}`} className="meal-title">
                           {item.recipe?.title || 'Unknown Recipe'}

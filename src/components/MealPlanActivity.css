@@ -1,0 +1,20 @@
+.meal-plan-activity {
+  margin-bottom: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
+}
+
+.activity-summary {
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.activity-empty {
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}

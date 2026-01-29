@@ -89,6 +89,10 @@ export async function generateGroceryListFromMealPlan(
  * For household lists, we query by household_id (shared among all members)
  * For personal lists, we query by user_id
  */
+/**
+ * Get active grocery list for user in specific context
+ * FALLBACK VERSION: Fetches checked_by user info separately to avoid relationship issues
+ */
 export async function getActiveGroceryList(userId: string, householdId?: string | null) {
   try {
     let query = supabase
@@ -101,11 +105,10 @@ export async function getActiveGroceryList(userId: string, householdId?: string 
 
     // Filter by context
     if (householdId) {
-      // Household mode: query by household_id only
-      // This returns the SAME list for all household members
+      // Household mode: Get the household's list (shared by all members)
       query = query.eq('household_id', householdId);
     } else {
-      // Personal mode: query by user_id AND null household_id
+      // Personal mode: Get user's personal list
       query = query.eq('user_id', userId).is('household_id', null);
     }
 
@@ -115,6 +118,48 @@ export async function getActiveGroceryList(userId: string, householdId?: string 
       .single();
 
     if (error && error.code !== 'PGRST116') throw error;
+    
+    // If we have a grocery list with items, fetch user info for checked items
+    if (data && data.items) {
+      // Get unique user IDs from checked items
+      const userIds = [...new Set(
+        data.items
+          .filter((item: any) => item.checked_by_user_id)
+          .map((item: any) => item.checked_by_user_id)
+      )];
+
+      if (userIds.length > 0) {
+        // Fetch user info for all users who checked items
+        console.log('📋 Fetching user info for IDs:', userIds);
+        
+        const { data: users, error: usersError } = await supabase
+          .from('users')
+          .select('id, display_name, email')
+          .in('id', userIds);
+
+        console.log('👥 Fetched users:', users);
+        console.log('❌ Users error:', usersError);
+
+        // Create a map of user_id -> user info
+        const userMap = new Map(users?.map(u => [u.id, u]) || []);
+        
+        console.log('🗺️ User map:', Array.from(userMap.entries()));
+
+        // Attach user info to items
+        data.items = data.items.map((item: any) => {
+          const checkedByUser = item.checked_by_user_id ? userMap.get(item.checked_by_user_id) : null;
+          console.log(`📦 Item "${item.name}":`, {
+            checked_by_user_id: item.checked_by_user_id,
+            found_user: checkedByUser
+          });
+          return {
+            ...item,
+            checked_by: checkedByUser,
+          };
+        });
+      }
+    }
+
     return data;
   } catch (error) {
     console.error('Failed to get grocery list:', error);
@@ -124,12 +169,27 @@ export async function getActiveGroceryList(userId: string, householdId?: string 
 
 /**
  * Toggle item checked status
+ * Now tracks who checked the item and when
  */
-export async function toggleGroceryItem(itemId: string, isChecked: boolean) {
+export async function toggleGroceryItem(itemId: string, isChecked: boolean, userId?: string) {
   try {
+    const updateData: any = { 
+      is_checked: isChecked,
+    };
+
+    // If checking the item, record who and when
+    if (isChecked && userId) {
+      updateData.checked_by_user_id = userId;
+      updateData.checked_at = new Date().toISOString();
+    } else if (!isChecked) {
+      // If unchecking, clear the tracking
+      updateData.checked_by_user_id = null;
+      updateData.checked_at = null;
+    }
+
     const { data, error } = await supabase
       .from('grocery_list_items')
-      .update({ is_checked: isChecked })
+      .update(updateData)
       .eq('id', itemId)
       .select()
       .single();

@@ -110,8 +110,10 @@ const GroceryPage: React.FC = () => {
   };
 
   const handleToggleItem = async (itemId: string, currentState: boolean) => {
+    if (!user?.id) return;
+    
     try {
-      await toggleGroceryItem(itemId, !currentState);
+      await toggleGroceryItem(itemId, !currentState, user.id);
       await loadGroceryList();
     } catch (error) {
       console.error('Failed to toggle item:', error);
@@ -295,6 +297,11 @@ const GroceryPage: React.FC = () => {
                     {(item.quantity || item.unit) && (
                       <span className="item-quantity">
                         {formatQuantity(item.quantity, item.unit)}
+                      </span>
+                    )}
+                    {item.is_checked && item.checked_by && (
+                      <span className="item-checked-by">
+                        ✓ by {item.checked_by.display_name || item.checked_by.email}
                       </span>
                     )}
                   </div>

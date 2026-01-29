@@ -182,9 +182,10 @@
 .item-content {
   flex: 1;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  gap: var(--spacing-3);
+  gap: var(--spacing-2) var(--spacing-3);
   min-width: 0;
 }
 
@@ -198,6 +199,17 @@
   font-size: var(--font-size-sm);
   color: var(--color-primary-600);
   font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.item-checked-by {
+  font-size: var(--font-size-xs);
+  color: var(--color-success-600);
+  font-style: italic;
+  white-space: nowrap;
+  flex-basis: 100%;
+  margin-top: -0.25rem;
+}
   white-space: nowrap;
 }
 
