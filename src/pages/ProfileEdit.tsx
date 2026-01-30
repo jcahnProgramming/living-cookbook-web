@@ -12,6 +12,9 @@ const ProfileEditPage: React.FC = () => {
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [visibility, setVisibility] = useState<'public' | 'friends' | 'private'>('public');
+  const [websiteUrl, setWebsiteUrl] = useState('');
+  const [twitterHandle, setTwitterHandle] = useState('');
+  const [instagramHandle, setInstagramHandle] = useState('');
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -32,6 +35,9 @@ const ProfileEditPage: React.FC = () => {
         setBio(profile.bio || '');
         setLocation(profile.location || '');
         setVisibility(profile.profile_visibility || 'public');
+        setWebsiteUrl((profile as any).website_url || '');
+        setTwitterHandle((profile as any).twitter_handle || '');
+        setInstagramHandle((profile as any).instagram_handle || '');
       }
     } catch (err) {
       console.error('Failed to load profile:', err);
@@ -62,6 +68,13 @@ const ProfileEditPage: React.FC = () => {
         location: location.trim() || undefined,
         profile_visibility: visibility,
       };
+
+      // Add social links if provided
+      if (websiteUrl.trim() || twitterHandle.trim() || instagramHandle.trim()) {
+        (updates as any).website_url = websiteUrl.trim() || null;
+        (updates as any).twitter_handle = twitterHandle.trim() || null;
+        (updates as any).instagram_handle = instagramHandle.trim() || null;
+      }
 
       await updateProfile(user.id, updates);
       setSuccess(true);
@@ -180,6 +193,43 @@ const ProfileEditPage: React.FC = () => {
                   <div className="option-desc">Only you can see your profile</div>
                 </div>
               </label>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Social Links (Optional)</label>
+            <p className="form-hint">Connect your social media accounts</p>
+            
+            <div className="social-links-inputs">
+              <div className="social-input">
+                <span className="social-icon">🌐</span>
+                <input
+                  type="url"
+                  value={websiteUrl}
+                  onChange={(e) => setWebsiteUrl(e.target.value)}
+                  placeholder="https://yourwebsite.com"
+                />
+              </div>
+
+              <div className="social-input">
+                <span className="social-icon">🐦</span>
+                <input
+                  type="text"
+                  value={twitterHandle}
+                  onChange={(e) => setTwitterHandle(e.target.value)}
+                  placeholder="@username (Twitter/X)"
+                />
+              </div>
+
+              <div className="social-input">
+                <span className="social-icon">📸</span>
+                <input
+                  type="text"
+                  value={instagramHandle}
+                  onChange={(e) => setInstagramHandle(e.target.value)}
+                  placeholder="@username (Instagram)"
+                />
+              </div>
             </div>
           </div>
         </div>

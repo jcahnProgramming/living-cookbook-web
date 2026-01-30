@@ -14,6 +14,9 @@ export interface UserProfile {
     twitter?: string;
     website?: string;
   };
+  website_url?: string;
+  twitter_handle?: string;
+  instagram_handle?: string;
   created_at: string;
   recipes_created?: number;
   recipes_favorited?: number;

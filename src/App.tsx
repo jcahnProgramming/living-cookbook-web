@@ -11,6 +11,8 @@ import RecipeEditor from './pages/RecipeEditor';
 import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
+import UserSearch from './pages/UserSearch';
+import CreateMealPost from './pages/CreateMealPost';
 import Plan from './pages/Plan';
 import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
@@ -56,6 +58,8 @@ function App() {
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/profile/:userId" element={<Profile />} />
                       <Route path="/profile/edit" element={<ProfileEdit />} />
+                      <Route path="/people" element={<UserSearch />} />
+                      <Route path="/meals/create" element={<CreateMealPost />} />
                       <Route path="/recipe/:id" element={<RecipeDetail />} />
                       <Route path="/recipe/create" element={<RecipeBuilder />} />
                       <Route path="/recipe/edit/:id" element={<RecipeEditor />} />

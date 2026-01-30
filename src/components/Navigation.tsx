@@ -16,8 +16,9 @@ const NAV_ITEMS: NavItem[] = [
   { path: '/favorites', label: 'Favorites', icon: '❤️' },
   { path: '/plan', label: 'Plan', icon: '📅' },
   { path: '/grocery', label: 'Grocery', icon: '🛒' },
+  { path: '/people', label: 'People', icon: '👥' },
   { path: '/profile', label: 'Profile', icon: '👤' },
-  { path: '/household', label: 'Household', icon: '👥' },
+  { path: '/household', label: 'Household', icon: '🏡' },
   { path: '/my-kitchen', label: 'My Kitchen', icon: '🔪' },
   { path: '/marketplace', label: 'Marketplace', icon: '🏪' },
 ];
