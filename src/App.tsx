@@ -8,6 +8,9 @@ import Library from './pages/Library';
 import RecipeDetail from './pages/RecipeDetail';
 import RecipeBuilder from './pages/RecipeBuilder';
 import RecipeEditor from './pages/RecipeEditor';
+import Favorites from './pages/Favorites';
+import Profile from './pages/Profile';
+import ProfileEdit from './pages/ProfileEdit';
 import Plan from './pages/Plan';
 import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
@@ -49,6 +52,10 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/library" element={<Library />} />
+                      <Route path="/favorites" element={<Favorites />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/profile/:userId" element={<Profile />} />
+                      <Route path="/profile/edit" element={<ProfileEdit />} />
                       <Route path="/recipe/:id" element={<RecipeDetail />} />
                       <Route path="/recipe/create" element={<RecipeBuilder />} />
                       <Route path="/recipe/edit/:id" element={<RecipeEditor />} />

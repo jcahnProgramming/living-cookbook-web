@@ -234,6 +234,22 @@
   background: var(--color-primary-50);
 }
 
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-favorited {
+  background: var(--color-error-50);
+  border-color: var(--color-error-400);
+  color: var(--color-error-600);
+}
+
+.btn-favorited:hover:not(:disabled) {
+  background: var(--color-error-100);
+  border-color: var(--color-error-500);
+}
+
 /* Content Sections */
 .recipe-content {
   display: flex;

@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { getRecipeById } from '@/features/recipes/recipeService';
 import { formatTime, getDifficultyColor, getSpiceEmoji } from '@/features/recipes/recipeService';
 import RecipeReactions from '@/features/recipes/components/RecipeReactions';
+import { isFavorited, toggleFavorite } from '@/features/recipes/favoritesService';
 import type { Recipe } from '@/types';
 import './RecipeDetail.css';
 
@@ -15,6 +16,8 @@ const RecipeDetailPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavoriting, setIsFavoriting] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -28,6 +31,12 @@ const RecipeDetailPage: React.FC = () => {
       setError(null);
       const data = await getRecipeById(recipeId);
       setRecipe(data);
+      
+      // Check if favorited
+      if (user?.id) {
+        const favorited = await isFavorited(recipeId, user.id);
+        setIsFavorite(favorited);
+      }
     } catch (err) {
       console.error('Failed to load recipe:', err);
       setError('Failed to load recipe. Please try again.');
@@ -51,6 +60,26 @@ const RecipeDetailPage: React.FC = () => {
       alert('Failed to delete recipe. Please try again.');
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  const handleToggleFavorite = async () => {
+    if (!user?.id) {
+      alert('Please sign in to save favorites');
+      return;
+    }
+
+    if (!recipe?.id) return;
+
+    setIsFavoriting(true);
+    try {
+      const newStatus = await toggleFavorite(recipe.id, user.id);
+      setIsFavorite(newStatus);
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
+      alert('Failed to update favorites. Please try again.');
+    } finally {
+      setIsFavoriting(false);
     }
   };
 
@@ -185,11 +214,15 @@ const RecipeDetailPage: React.FC = () => {
           )}
 
           <div className="recipe-actions">
-            <Link to={`/cook/${recipe.id}`} className="btn-primary btn-cook">
+            <Link to={`/cooking/${recipe.id}`} className="btn-primary btn-cook">
               🍳 Start Cooking
             </Link>
-            <button className="btn-secondary">
-              ❤️ Save to Favorites
+            <button 
+              onClick={handleToggleFavorite}
+              disabled={isFavoriting}
+              className={`btn-secondary ${isFavorite ? 'btn-favorited' : ''}`}
+            >
+              {isFavorite ? '💖 Saved' : '❤️ Save to Favorites'}
             </button>
           </div>
         </div>

@@ -24,12 +24,15 @@ export async function generateGroceryListFromMealPlan(
   householdId?: string | null
 ) {
   try {
-    // Get meal plan items with recipes
+    // Get meal plan items with recipes AND ingredients for user-created recipes
     const { data: mealPlanItems, error: itemsError } = await supabase
       .from('meal_plan_items')
       .select(`
         *,
-        recipe:recipes (*)
+        recipe:recipes (
+          *,
+          ingredients:recipe_ingredients(*)
+        )
       `)
       .eq('meal_plan_id', mealPlanId);
 
@@ -275,11 +278,9 @@ function aggregateIngredients(mealPlanItems: any[]): AggregatedItem[] {
     const recipe = mealPlanItem.recipe;
     const servingsMultiplier = mealPlanItem.servings / (recipe.yield_servings || 1);
 
-    // Process each grocery list section
-    recipe.grocery_list?.sections?.forEach((section: any) => {
-      const category = section.name || 'Other';
-
-      section.items?.forEach((ingredient: any) => {
+    // Handle user-created recipes (with recipe_ingredients table)
+    if (recipe.ingredients && Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0) {
+      recipe.ingredients.forEach((ingredient: any) => {
         const key = `${ingredient.name.toLowerCase()}-${ingredient.unit || 'none'}`;
 
         if (itemsMap.has(key)) {
@@ -301,13 +302,48 @@ function aggregateIngredients(mealPlanItems: any[]): AggregatedItem[] {
               ? ingredient.quantity * servingsMultiplier
               : null,
             unit: ingredient.unit || null,
-            category,
+            category: ingredient.section || 'Other',
             recipe_ids: [recipe.id],
             notes: ingredient.notes,
           });
         }
       });
-    });
+    }
+    // Handle imported recipes (with grocery_list JSONB)
+    else if (recipe.grocery_list?.sections) {
+      recipe.grocery_list.sections.forEach((section: any) => {
+        const category = section.name || 'Other';
+
+        section.items?.forEach((ingredient: any) => {
+          const key = `${ingredient.name.toLowerCase()}-${ingredient.unit || 'none'}`;
+
+          if (itemsMap.has(key)) {
+            const existing = itemsMap.get(key)!;
+            
+            // Aggregate quantities
+            if (ingredient.quantity && existing.quantity !== null) {
+              existing.quantity += ingredient.quantity * servingsMultiplier;
+            }
+            
+            // Add recipe ID
+            if (!existing.recipe_ids.includes(recipe.id)) {
+              existing.recipe_ids.push(recipe.id);
+            }
+          } else {
+            itemsMap.set(key, {
+              name: ingredient.name,
+              quantity: ingredient.quantity
+                ? ingredient.quantity * servingsMultiplier
+                : null,
+              unit: ingredient.unit || null,
+              category,
+              recipe_ids: [recipe.id],
+              notes: ingredient.notes,
+            });
+          }
+        });
+      });
+    }
   });
 
   // Convert map to array and sort by category
