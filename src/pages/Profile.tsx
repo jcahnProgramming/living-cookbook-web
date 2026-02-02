@@ -5,6 +5,8 @@ import { getUserProfile, type UserProfile } from '@/features/users/userProfileSe
 import { getUserRecipes } from '@/features/recipes/userRecipeService';
 import { getUserMealPosts, deleteMealPost, type MealPost } from '@/features/meals/mealPostsService';
 import { isFollowing, toggleFollow, getFollowCounts } from '@/features/users/userFollowingService';
+import { getPublicSocialConnections, SOCIAL_PROVIDERS } from '@/features/social/socialConnectionsService';
+import FriendButton from '@/features/friends/components/FriendButton';
 import RecipeCard from '@/features/recipes/components/RecipeCard';
 import './Profile.css';
 
@@ -16,6 +18,7 @@ const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [recipes, setRecipes] = useState<any[]>([]);
   const [mealPosts, setMealPosts] = useState<MealPost[]>([]);
+  const [socialConnections, setSocialConnections] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [isFollowingUser, setIsFollowingUser] = useState(false);
@@ -40,11 +43,12 @@ const ProfilePage: React.FC = () => {
       setIsLoading(true);
       setError('');
 
-      const [profileData, recipesData, postsData, counts] = await Promise.all([
+      const [profileData, recipesData, postsData, counts, connections] = await Promise.all([
         getUserProfile(profileUserId),
         getUserRecipes(profileUserId),
         getUserMealPosts(profileUserId),
         getFollowCounts(profileUserId),
+        getPublicSocialConnections(profileUserId),
       ]);
 
       if (!profileData) {
@@ -57,6 +61,7 @@ const ProfilePage: React.FC = () => {
       setMealPosts(postsData || []);
       setFollowerCount(counts.followers);
       setFollowingCount(counts.following);
+      setSocialConnections(connections || []);
 
       // Check if current user is following this profile
       if (user?.id && !isOwnProfile) {
@@ -156,41 +161,26 @@ const ProfilePage: React.FC = () => {
             </div>
           )}
 
-          {((profile as any).website_url || (profile as any).twitter_handle || (profile as any).instagram_handle) && (
+          {socialConnections.length > 0 && (
             <div className="profile-social-links">
-              {(profile as any).website_url && (
-                <a 
-                  href={(profile as any).website_url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  title="Website"
-                >
-                  🌐
-                </a>
-              )}
-              {(profile as any).twitter_handle && (
-                <a 
-                  href={`https://twitter.com/${(profile as any).twitter_handle.replace('@', '')}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  title="Twitter/X"
-                >
-                  🐦
-                </a>
-              )}
-              {(profile as any).instagram_handle && (
-                <a 
-                  href={`https://instagram.com/${(profile as any).instagram_handle.replace('@', '')}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  title="Instagram"
-                >
-                  📸
-                </a>
-              )}
+              {socialConnections.map((connection) => {
+                const provider = SOCIAL_PROVIDERS[connection.provider as keyof typeof SOCIAL_PROVIDERS];
+                if (!provider) return null;
+
+                return (
+                  <a 
+                    key={connection.provider}
+                    href={connection.provider_profile_url || '#'} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="social-link"
+                    title={`${provider.name}: ${connection.provider_username || connection.provider_display_name}`}
+                    style={{ color: provider.color }}
+                  >
+                    {provider.icon}
+                  </a>
+                );
+              })}
             </div>
           )}
 
@@ -219,13 +209,16 @@ const ProfilePage: React.FC = () => {
                 ✏️ Edit Profile
               </Link>
             ) : (
-              <button
-                onClick={handleToggleFollow}
-                disabled={isFollowLoading}
-                className={`btn-follow ${isFollowingUser ? 'following' : ''}`}
-              >
-                {isFollowLoading ? '...' : isFollowingUser ? '✓ Following' : '+ Follow'}
-              </button>
+              <>
+                <FriendButton userId={profile.id} onStatusChange={loadProfile} />
+                <button
+                  onClick={handleToggleFollow}
+                  disabled={isFollowLoading}
+                  className={`btn-follow ${isFollowingUser ? 'following' : ''}`}
+                >
+                  {isFollowLoading ? '...' : isFollowingUser ? '✓ Following' : '+ Follow'}
+                </button>
+              </>
             )}
           </div>
         </div>

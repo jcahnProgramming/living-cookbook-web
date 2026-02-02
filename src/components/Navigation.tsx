@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import NotificationBell from '@/features/notifications/components/NotificationBell';
 import ThemeSwitcher from './ThemeSwitcher';
 import './Navigation.css';
 
@@ -13,14 +14,11 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { path: '/', label: 'Home', icon: '🏠' },
   { path: '/library', label: 'Library', icon: '📚' },
-  { path: '/favorites', label: 'Favorites', icon: '❤️' },
   { path: '/plan', label: 'Plan', icon: '📅' },
   { path: '/grocery', label: 'Grocery', icon: '🛒' },
-  { path: '/people', label: 'People', icon: '👥' },
-  { path: '/profile', label: 'Profile', icon: '👤' },
-  { path: '/household', label: 'Household', icon: '🏡' },
   { path: '/my-kitchen', label: 'My Kitchen', icon: '🔪' },
   { path: '/marketplace', label: 'Marketplace', icon: '🏪' },
+  { path: '/settings', label: 'Settings', icon: '⚙️' },
 ];
 
 const Navigation: React.FC = () => {
@@ -63,6 +61,7 @@ const Navigation: React.FC = () => {
         </div>
 
         <div className="navigation__actions">
+          <NotificationBell />
           <ThemeSwitcher />
           <Link to="/settings" className="navigation__settings-button" aria-label="Settings">
             <span>⚙️</span>

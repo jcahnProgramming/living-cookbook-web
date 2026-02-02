@@ -13,6 +13,11 @@ import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import UserSearch from './pages/UserSearch';
 import CreateMealPost from './pages/CreateMealPost';
+import FollowingFeed from './pages/FollowingFeed';
+import ExploreFeed from './pages/ExploreFeed';
+import FriendRequests from './pages/FriendRequests';
+import FriendsList from './pages/FriendsList';
+import Notifications from './pages/Notifications';
 import Plan from './pages/Plan';
 import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
@@ -26,6 +31,7 @@ import Login from './pages/auth/Login';
 import SignUp from './pages/auth/SignUp';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
+import AuthCallback from './pages/AuthCallback';
 import './styles/tokens.css';
 import './styles/tokens-extended.css';
 import './styles/global.css';
@@ -41,6 +47,7 @@ function App() {
             <Route path="/auth/signup" element={<SignUp />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
             <Route path="/auth/reset-password" element={<ResetPassword />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
 
             {/* Public Invitation Route */}
             <Route path="/household/join/:token" element={<AcceptInvitation />} />
@@ -59,6 +66,11 @@ function App() {
                       <Route path="/profile/:userId" element={<Profile />} />
                       <Route path="/profile/edit" element={<ProfileEdit />} />
                       <Route path="/people" element={<UserSearch />} />
+                      <Route path="/friends" element={<FriendsList />} />
+                      <Route path="/friend-requests" element={<FriendRequests />} />
+                      <Route path="/notifications" element={<Notifications />} />
+                      <Route path="/feed" element={<FollowingFeed />} />
+                      <Route path="/explore" element={<ExploreFeed />} />
                       <Route path="/meals/create" element={<CreateMealPost />} />
                       <Route path="/recipe/:id" element={<RecipeDetail />} />
                       <Route path="/recipe/create" element={<RecipeBuilder />} />

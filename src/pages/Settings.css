@@ -1,204 +1,180 @@
-.settings {
-  min-height: calc(100vh - 80px);
-  background: var(--color-background);
-  padding: var(--space-2xl) var(--space-lg);
-}
-
-.settings__container {
+.settings-page {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
 
-.settings__title {
-  font-family: var(--font-header);
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2xl);
+.settings-header {
+  margin-bottom: var(--spacing-8);
 }
 
-.settings__section {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  margin-bottom: var(--space-xl);
+.settings-header h1 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-2);
 }
 
-.settings__section-title {
-  font-family: var(--font-header);
-  font-size: var(--text-xl);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-md);
-}
-
-.settings__group {
-  margin-bottom: var(--space-lg);
-}
-
-.settings__group:last-child {
-  margin-bottom: 0;
-}
-
-.settings__label {
-  display: block;
-  font-family: var(--font-body);
-  font-size: var(--text-md);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-xs);
-}
-
-.settings__description {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
+.settings-header p {
+  font-size: var(--font-size-lg);
   color: var(--color-text-secondary);
-  margin: 0 0 var(--space-md);
-  line-height: 1.6;
+}
+
+/* Settings Sections */
+.settings-section {
+  margin-bottom: var(--spacing-12);
+}
+
+.settings-section h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-2);
+}
+
+.section-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-6);
 }
 
 /* Theme Grid */
-.settings__theme-grid {
+.theme-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--space-md);
-  margin-top: var(--space-md);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--spacing-4);
+  max-width: 800px;
 }
 
-.settings__theme-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  background: var(--color-surface-elevated);
-  border: 2px solid var(--color-border-light);
-  border-radius: var(--radius-lg);
+.theme-button {
+  padding: var(--spacing-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background: var(--color-surface);
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast);
+  color: var(--color-text-primary);
 }
 
-.settings__theme-card:hover {
-  border-color: var(--color-border-medium);
+.theme-button:hover {
+  border-color: var(--color-primary-400);
+  background: var(--color-primary-50);
+}
+
+.theme-button.active {
+  border-color: var(--color-primary-600);
+  background: var(--color-primary-100);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Setting Cards */
+.setting-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  margin-bottom: var(--spacing-4);
+  transition: all var(--transition-fast);
+}
+
+.setting-card:hover {
+  border-color: var(--color-primary-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-1);
+}
+
+.setting-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Toggle Settings */
+.setting-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  cursor: pointer;
+  flex: 1;
+}
+
+.setting-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.btn-manage {
+  padding: var(--spacing-3) var(--spacing-5);
+  background: var(--color-primary-600);
+  color: white;
+  border: none;
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-manage:hover {
+  background: var(--color-primary-700);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
-.settings__theme-card--active {
-  border-color: var(--color-primary-500);
-  background: var(--color-primary-50);
+/* Badges */
+.badge-coming-soon {
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--color-warning-100);
+  color: var(--color-warning-700);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Theme Preview */
-.settings__theme-preview {
-  display: flex;
-  gap: 4px;
-  width: 100%;
-  height: 60px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--color-border-light);
+/* Status Messages */
+.setting-status {
+  margin-top: var(--spacing-4);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
 }
 
-.settings__theme-preview > span {
-  flex: 1;
-  transition: background-color 0.3s ease;
+.setting-status.active {
+  background: var(--color-success-50);
+  border: 1px solid var(--color-success-200);
+  color: var(--color-success-800);
 }
 
-/* Theme-specific previews */
-[data-theme="warm-bookish"] .settings__theme-preview-primary {
-  background: #F97316;
-}
-[data-theme="warm-bookish"] .settings__theme-preview-secondary {
-  background: #D97706;
-}
-[data-theme="warm-bookish"] .settings__theme-preview-neutral {
-  background: #FFFBF5;
-}
-
-[data-theme="cool-night"] .settings__theme-preview-primary {
-  background: #0F172A;
-}
-[data-theme="cool-night"] .settings__theme-preview-secondary {
-  background: #6366F1;
-}
-[data-theme="cool-night"] .settings__theme-preview-neutral {
-  background: #1E293B;
-}
-
-[data-theme="winter"] .settings__theme-preview-primary {
-  background: #0EA5E9;
-}
-[data-theme="winter"] .settings__theme-preview-secondary {
-  background: #CBD5E1;
-}
-[data-theme="winter"] .settings__theme-preview-neutral {
-  background: #F0F9FF;
-}
-
-[data-theme="spring"] .settings__theme-preview-primary {
-  background: #22C55E;
-}
-[data-theme="spring"] .settings__theme-preview-secondary {
-  background: #EC4899;
-}
-[data-theme="spring"] .settings__theme-preview-neutral {
-  background: #F0FDF4;
-}
-
-[data-theme="summer"] .settings__theme-preview-primary {
-  background: #FACC15;
-}
-[data-theme="summer"] .settings__theme-preview-secondary {
-  background: #F97316;
-}
-[data-theme="summer"] .settings__theme-preview-neutral {
-  background: #FFFBEB;
-}
-
-[data-theme="fall"] .settings__theme-preview-primary {
-  background: #EF4444;
-}
-[data-theme="fall"] .settings__theme-preview-secondary {
-  background: #A07856;
-}
-[data-theme="fall"] .settings__theme-preview-neutral {
-  background: #FDF8F6;
-}
-
-.settings__theme-name {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  text-align: center;
-}
-
-/* Mobile Responsive */
+/* Responsive */
 @media (max-width: 640px) {
-  .settings {
-    padding: var(--space-lg) var(--space-md);
+  .setting-card {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .settings__section {
-    padding: var(--space-lg);
+  .btn-manage {
+    width: 100%;
   }
 
-  .settings__theme-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: var(--space-sm);
-  }
-
-  .settings__theme-card {
-    padding: var(--space-sm);
-  }
-
-  .settings__theme-preview {
-    height: 50px;
-  }
-
-  .settings__theme-name {
-    font-size: var(--text-xs);
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

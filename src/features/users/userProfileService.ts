@@ -1,10 +1,17 @@
 import { supabase } from '@/lib/supabase';
 
+export interface AvailableAvatar {
+  source: string;
+  url: string;
+  provider: string;
+}
+
 export interface UserProfile {
   id: string;
   email: string;
   display_name: string;
   avatar_url?: string;
+  avatar_source?: string;
   bio?: string;
   location?: string;
   profile_visibility: 'public' | 'friends' | 'private';
@@ -24,6 +31,8 @@ export interface UserProfile {
 
 export interface UpdateProfileData {
   display_name?: string;
+  avatar_url?: string;
+  avatar_source?: string;
   bio?: string;
   location?: string;
   profile_visibility?: 'public' | 'friends' | 'private';
@@ -178,6 +187,32 @@ export async function searchUsers(query: string): Promise<UserProfile[]> {
     return data || [];
   } catch (error) {
     console.error('Failed to search users:', error);
+    return [];
+  }
+}
+
+/**
+ * Get all available avatars for a user (from connected social accounts)
+ */
+export async function getAvailableAvatars(userId: string): Promise<AvailableAvatar[]> {
+  try {
+    const { data, error } = await supabase
+      .from('user_social_connections')
+      .select('provider, provider_avatar_url')
+      .eq('user_id', userId)
+      .not('provider_avatar_url', 'is', null);
+
+    if (error) throw error;
+    
+    if (!data) return [];
+
+    return data.map(conn => ({
+      source: conn.provider,
+      url: conn.provider_avatar_url,
+      provider: conn.provider.charAt(0).toUpperCase() + conn.provider.slice(1),
+    }));
+  } catch (error) {
+    console.error('Failed to get available avatars:', error);
     return [];
   }
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { getMyProfile, updateProfile, type UpdateProfileData } from '@/features/users/userProfileService';
+import AvatarPicker from '@/features/users/components/AvatarPicker';
 import './ProfileEdit.css';
 
 const ProfileEditPage: React.FC = () => {
@@ -12,9 +13,8 @@ const ProfileEditPage: React.FC = () => {
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [visibility, setVisibility] = useState<'public' | 'friends' | 'private'>('public');
-  const [websiteUrl, setWebsiteUrl] = useState('');
-  const [twitterHandle, setTwitterHandle] = useState('');
-  const [instagramHandle, setInstagramHandle] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
+  const [avatarSource, setAvatarSource] = useState('custom');
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -35,9 +35,8 @@ const ProfileEditPage: React.FC = () => {
         setBio(profile.bio || '');
         setLocation(profile.location || '');
         setVisibility(profile.profile_visibility || 'public');
-        setWebsiteUrl((profile as any).website_url || '');
-        setTwitterHandle((profile as any).twitter_handle || '');
-        setInstagramHandle((profile as any).instagram_handle || '');
+        setAvatarUrl(profile.avatar_url || '');
+        setAvatarSource(profile.avatar_source || 'custom');
       }
     } catch (err) {
       console.error('Failed to load profile:', err);
@@ -67,14 +66,9 @@ const ProfileEditPage: React.FC = () => {
         bio: bio.trim() || undefined,
         location: location.trim() || undefined,
         profile_visibility: visibility,
+        avatar_url: avatarUrl || undefined,
+        avatar_source: avatarSource,
       };
-
-      // Add social links if provided
-      if (websiteUrl.trim() || twitterHandle.trim() || instagramHandle.trim()) {
-        (updates as any).website_url = websiteUrl.trim() || null;
-        (updates as any).twitter_handle = twitterHandle.trim() || null;
-        (updates as any).instagram_handle = instagramHandle.trim() || null;
-      }
 
       await updateProfile(user.id, updates);
       setSuccess(true);
@@ -110,6 +104,18 @@ const ProfileEditPage: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="profile-edit-form">
+        {/* Avatar Picker */}
+        <div className="form-section">
+          <AvatarPicker
+            currentAvatarUrl={avatarUrl}
+            currentAvatarSource={avatarSource}
+            onSelect={(url, source) => {
+              setAvatarUrl(url);
+              setAvatarSource(source);
+            }}
+          />
+        </div>
+
         <div className="form-section">
           <div className="form-group">
             <label htmlFor="displayName">Display Name *</label>
@@ -193,43 +199,6 @@ const ProfileEditPage: React.FC = () => {
                   <div className="option-desc">Only you can see your profile</div>
                 </div>
               </label>
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>Social Links (Optional)</label>
-            <p className="form-hint">Connect your social media accounts</p>
-            
-            <div className="social-links-inputs">
-              <div className="social-input">
-                <span className="social-icon">🌐</span>
-                <input
-                  type="url"
-                  value={websiteUrl}
-                  onChange={(e) => setWebsiteUrl(e.target.value)}
-                  placeholder="https://yourwebsite.com"
-                />
-              </div>
-
-              <div className="social-input">
-                <span className="social-icon">🐦</span>
-                <input
-                  type="text"
-                  value={twitterHandle}
-                  onChange={(e) => setTwitterHandle(e.target.value)}
-                  placeholder="@username (Twitter/X)"
-                />
-              </div>
-
-              <div className="social-input">
-                <span className="social-icon">📸</span>
-                <input
-                  type="text"
-                  value={instagramHandle}
-                  onChange={(e) => setInstagramHandle(e.target.value)}
-                  placeholder="@username (Instagram)"
-                />
-              </div>
             </div>
           </div>
         </div>
