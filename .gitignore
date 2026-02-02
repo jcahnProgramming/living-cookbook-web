@@ -30,7 +30,6 @@ dist-ssr
 .env.*.local
 .env.production
 .env.development
-.env.local.template
 
 # Keep .env.example for reference
 

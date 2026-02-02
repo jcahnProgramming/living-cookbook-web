@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import NotificationBell from '@/features/notifications/components/NotificationBell';
+import UniversalSearch from '@/features/search/components/UniversalSearch';
 import ThemeSwitcher from './ThemeSwitcher';
 import './Navigation.css';
 
@@ -25,6 +26,7 @@ const Navigation: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { signOut, user } = useAuth();
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
   const handleSignOut = async () => {
     try {
@@ -61,6 +63,13 @@ const Navigation: React.FC = () => {
         </div>
 
         <div className="navigation__actions">
+          <button
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="navigation__search-button"
+            aria-label="Search"
+          >
+            🔍
+          </button>
           <NotificationBell />
           <ThemeSwitcher />
           <Link to="/settings" className="navigation__settings-button" aria-label="Settings">
@@ -76,6 +85,13 @@ const Navigation: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Search Overlay */}
+      {isSearchOpen && (
+        <div className="search-overlay">
+          <UniversalSearch isOpen={isSearchOpen} onToggle={() => setIsSearchOpen(false)} />
+        </div>
+      )}
     </nav>
   );
 };

@@ -18,6 +18,7 @@ import ExploreFeed from './pages/ExploreFeed';
 import FriendRequests from './pages/FriendRequests';
 import FriendsList from './pages/FriendsList';
 import Notifications from './pages/Notifications';
+import Search from './pages/Search';
 import Plan from './pages/Plan';
 import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
@@ -69,6 +70,7 @@ function App() {
                       <Route path="/friends" element={<FriendsList />} />
                       <Route path="/friend-requests" element={<FriendRequests />} />
                       <Route path="/notifications" element={<Notifications />} />
+                      <Route path="/search" element={<Search />} />
                       <Route path="/feed" element={<FollowingFeed />} />
                       <Route path="/explore" element={<ExploreFeed />} />
                       <Route path="/meals/create" element={<CreateMealPost />} />
