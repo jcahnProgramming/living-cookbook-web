@@ -9,6 +9,7 @@ Living Cookbook is designed to be:
 - **Trust-first** - Clear controls, no silent changes
 - **Kitchen reality wins** - Built for actual home cooking scenarios
 - **Accessible** - Dyslexia-friendly fonts, WCAG AA compliant
+- **Social yet private** - Connect with friends without the noise
 
 ## 🚀 Tech Stack
 
@@ -19,142 +20,290 @@ Living Cookbook is designed to be:
 - **Routing**: React Router v6
 - **Hosting**: Vercel
 
-## 📦 Project Structure
+## 🎯 Current Development Status
 
-```
-living-cookbook-web/
-├── src/
-│   ├── components/        # Reusable UI components
-│   │   ├── layout/        # Layout components (Header, Footer, etc.)
-│   │   └── ui/            # Base UI components (Button, Card, etc.)
-│   ├── features/          # Feature-specific modules
-│   ├── lib/               # Utilities, helpers, API clients
-│   ├── pages/             # Page components (routes)
-│   ├── styles/            # Global styles and tokens
-│   │   ├── tokens.css     # Design tokens (colors, spacing, etc.)
-│   │   └── global.css     # Global CSS reset and base styles
-│   ├── types/             # TypeScript type definitions
-│   ├── App.tsx            # Main App component
-│   └── main.tsx           # Application entry point
-├── public/                # Static assets
-├── index.html             # HTML entry point
-├── vite.config.ts         # Vite configuration
-├── tsconfig.json          # TypeScript configuration
-└── package.json           # Dependencies and scripts
-```
+**Version**: 0.7.0-alpha  
+**Phase**: 6 Complete (Social Features + Privacy & Safety)  
+**Next**: Phase 7 (Marketplace) or completing remaining Phase 6 items
 
-## 🛠️ Development Setup
+### ✅ Completed Features
+
+#### Phase 0: Foundations
+- Project setup with Vite + React + TypeScript
+- Token-based design system
+- 5 theme system (including dark mode)
+- Supabase integration
+- Authentication (email + OAuth)
+
+#### Phase 1: Core Cooking MVP
+- User accounts with profiles
+- Recipe library with filters
+- Recipe detail pages
+- Favorites system
+- Personal notes on recipes
+
+#### Phase 2: Planning & Groceries
+- Weekly meal planner with calendar
+- Smart grocery aggregation
+- Interactive checklist
+- Serving size scaling
+
+#### Phase 3: Households
+- Household creation & invites
+- Shared meal planning
+- Shared grocery lists
+- Member management
+
+#### Phase 6: Social Features ⭐
+- OAuth social connections (Discord, Google, Facebook, etc.)
+- Activity feed with meal posts
+- Dashboard with friends' activity
+- Likes system
+- Friends system (requests & accepts)
+- Comments on posts
+- Multi-source avatar picker
+- Smart polling (90% query reduction)
+- Real-time notifications with bell icon
+- Universal search (⌘K) for users, recipes, posts
+- **Privacy & Safety System**:
+  - Tabbed settings page (6 sections)
+  - Privacy controls (visibility, permissions)
+  - Notification preferences (13 types)
+  - Blocked users management
+  - Content reporting system
+  - Muting system
+
+### 🚧 Planned / In Progress
+
+#### Phase 4: Premium Volumes
+- Volumes catalog
+- One-time purchases
+- Household sharing
+
+#### Phase 5: Personal Recipe Builder
+- Custom recipe creation
+- Photo uploads
+- Sharing with friends
+
+#### Phase 6.5: AI Pantry Assistant
+- Ingredient scanning
+- Recipe matching
+- AI recipe generation
+
+#### Phase 7: Marketplace
+- Creator profiles
+- Recipe selling
+- Revenue tracking
+
+#### Phase 8: Partner Creator Program
+- Referral system
+- Revenue sharing
+
+## 📦 Quick Start
 
 ### Prerequisites
-- Node.js 18+ and npm
+- Node.js 18+
+- Supabase account
 
 ### Installation
 
-1. Clone the repository
 ```bash
+# Clone & install
 git clone <your-repo-url>
 cd living-cookbook-web
-```
-
-2. Install dependencies
-```bash
 npm install
-```
 
-3. Start development server
-```bash
+# Configure environment
+cp .env.example .env.local
+# Add your Supabase credentials
+
+# Run migrations (in Supabase SQL Editor)
+# Execute files in /supabase/migrations/ in order
+
+# Start dev server
 npm run dev
 ```
 
-The app will open at `http://localhost:3000`
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-
 ## 🎨 Design System
 
-The project uses a token-based theming system with CSS variables. All design tokens are defined in `src/styles/tokens.css`.
+### Themes
+- 🌞 Warm Day (Default)
+- 🌙 Cool Night (Dark)
+- 🌳 Forest
+- 🌸 Sakura
+- ☕ Espresso
 
-### Color Palette
-- **Primary**: Warm browns (cookbook aesthetic)
-- **Secondary**: Chocolate accents
-- **Neutral**: Paper-like cream backgrounds
-- **Success**: Natural olive green
+Toggle themes with the 🎨 icon in navigation.
 
 ### Typography
-- **Headers**: Georgia (serif) - Warm, bookish feel
-- **Body**: Verdana (sans-serif) - Dyslexia-friendly
-- **Increased letter spacing**: Better readability
+- **Headers**: Georgia (serif)
+- **Body**: Verdana (sans-serif, dyslexia-friendly)
+- Increased letter spacing for readability
 
 ### Key Principles
-- Large tap targets (min 44x44px)
-- Generous spacing
-- Minimal icons
-- Card and shelf layouts
-- WCAG AA contrast minimum
+- Large tap targets (44px min)
+- 8px baseline grid
+- WCAG AA contrast (4.5:1)
+- Mobile-first responsive
 
-## 📋 Development Phases
+## 🗄️ Database Architecture
 
-### Phase 0: Foundations ✅ (CURRENT)
-- [x] Project initialization
-- [x] Design system setup
-- [x] Type definitions
-- [x] Basic routing structure
-- [ ] Supabase setup
-- [ ] Authentication system
+### Core Tables
+- `users` - Accounts with privacy settings
+- `recipes` - Recipe library
+- `meal_plans` - Weekly planning
+- `grocery_lists` - Smart lists
+- `households` - Shared groups
 
-### Phase 1: Core Cooking MVP (NEXT)
-- [ ] User accounts
-- [ ] Browse recipe library
-- [ ] Recipe detail page
-- [ ] Guided cooking mode
-- [ ] Favorites
-- [ ] Personal notes
+### Social Tables
+- `user_social_connections` - OAuth accounts
+- `activity_feed` - Meal posts
+- `activity_likes` - Post likes
+- `activity_comments` - Comments
+- `user_follows` - Following
+- `friend_requests` - Friend system
+- `friends` - Accepted friendships
+- `notifications` - Real-time alerts
 
-### Phase 2: Planning & Groceries
-- [ ] Weekly meal planner
-- [ ] Grocery aggregation engine
-- [ ] Serving size scaling
+### Privacy & Safety Tables
+- `user_blocks` - Blocked users
+- `user_mutes` - Muted users  
+- `content_reports` - Reports
+- `notification_preferences` - User prefs
+- `hidden_posts` - Hidden from feed
 
-### Future Phases
-- Phase 2.5: Altitude-Aware Cooking
-- Phase 3: Households
-- Phase 4: Premium Volumes
-- Phase 5: Personal Recipe Builder
-- Phase 6: AI Pantry Assistant
-- Phase 6.5: Bakeware Intelligence
-- Phase 7: Marketplace
-- Phase 8: Partner Creator Program
+All tables use Row Level Security (RLS) policies.
 
-## 🔐 Environment Variables
+## 🔒 Privacy & Safety
 
-Create a `.env.local` file in the root directory:
+### User Controls
+- Profile & post visibility (Public/Friends/Private)
+- Friend request permissions
+- Comment permissions
+- Follower visibility
+- Searchable toggle
+- Online status toggle
 
-```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+### Notifications
+- Email & push toggles
+- Frequency control (Instant/Daily/Weekly)
+- 13 granular notification types
+- Enable/disable all
+
+### Safety
+- Block users
+- Mute users
+- Report content (spam, harassment, etc.)
+- Hide posts from feed
+
+## 🔍 Search System
+
+- **Shortcut**: ⌘K / Ctrl+K
+- Searches users, recipes, posts
+- Real-time results (300ms debounce)
+- Filter tabs: All / Users / Recipes / Posts
+
+## 🔔 Notifications
+
+- Real-time updates via Supabase
+- Bell icon with unread count
+- Dropdown notification center
+- Mark as read
+- Smart polling fallback (60s)
+
+## 🚀 Performance
+
+- **90% query reduction** with smart polling
+- Indexed database columns
+- Code splitting by route
+- Lazy loading
+- CSS minification
+
+## 📱 Mobile Support
+
+- Touch-friendly (44px tap targets)
+- Responsive navigation
+- Mobile-optimized layouts
+- PWA ready (coming soon)
+
+## 🌐 Browser Support
+
+- Chrome/Edge 100+
+- Firefox 100+
+- Safari 15+
+- Mobile browsers (iOS Safari 15+, Chrome Mobile)
+
+## 🔐 Security
+
+- Supabase Auth (email + OAuth)
+- Row Level Security (RLS)
+- HTTPS encrypted
+- JWT tokens with auto-refresh
+- CORS configured
+- Rate limiting
+
+## 🛠️ Development
+
+### Scripts
+```bash
+npm run dev      # Start dev server
+npm run build    # Production build
+npm run preview  # Preview build
+npm run lint     # ESLint
 ```
 
-## 🧪 Testing
+### Commit Format
+```
+<type>: <description>
 
-Coming soon...
+feat: Add new feature
+fix: Bug fix
+docs: Documentation
+style: Formatting
+refactor: Code restructure
+test: Add tests
+chore: Maintenance
+```
+
+## 📊 Project Stats
+
+- **Lines of Code**: ~15,000+
+- **Database Tables**: 18
+- **UI Components**: 50+
+- **Pages**: 15+
+- **Themes**: 5
+- **Features**: 30+
+
+## 🎉 Recent Updates
+
+### February 2026
+- ✨ Privacy & Safety System (2,500+ lines)
+- 🔍 Universal Search with ⌘K
+- 🔔 Real-time Notifications
+- 📊 Smart Polling (-90% queries)
+- 👤 Avatar Picker (multi-source)
+- 💬 Comments System
+- 👥 Friends System
+- ❤️ Likes System
+- 📱 Activity Feed
+
+### January 2026
+- 🏠 Households
+- 🛒 Smart Grocery Lists
+- 📅 Meal Planner
+- 📚 Recipe Library
+- 🎨 Theme System
+- 🔐 Authentication
 
 ## 📝 License
 
 Internal project - All rights reserved
 
-## 🤝 Contributing
+## 📧 Support
 
-This is a private project currently in development.
-
-## 📧 Contact
-
-For questions or feedback, please create an issue in the repository.
+Create an issue in the repository for questions or feedback.
 
 ---
 
-**Current Status**: Phase 0 (Foundations) - Setting up project structure
-**Last Updated**: January 27, 2026
+**Built with ❤️ for home cooks everywhere**  
+**Last Updated**: February 3, 2026
