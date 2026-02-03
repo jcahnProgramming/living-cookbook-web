@@ -19,7 +19,6 @@ const NAV_ITEMS: NavItem[] = [
   { path: '/grocery', label: 'Grocery', icon: '🛒' },
   { path: '/my-kitchen', label: 'My Kitchen', icon: '🔪' },
   { path: '/marketplace', label: 'Marketplace', icon: '🏪' },
-  { path: '/settings', label: 'Settings', icon: '⚙️' },
 ];
 
 const Navigation: React.FC = () => {

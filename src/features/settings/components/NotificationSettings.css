@@ -1,0 +1,31 @@
+.notification-settings {
+  max-width: 800px;
+}
+
+.quick-actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
+}
+
+.sub-setting {
+  margin-top: var(--spacing-4);
+  padding-left: var(--spacing-8);
+}
+
+.sub-setting label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2);
+}
+
+.success-message {
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-success-100);
+  color: var(--color-success-700);
+  border-radius: var(--radius-base);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}

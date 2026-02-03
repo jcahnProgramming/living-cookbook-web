@@ -22,6 +22,7 @@ import Search from './pages/Search';
 import Plan from './pages/Plan';
 import Grocery from './pages/Grocery';
 import Settings from './pages/Settings';
+import SettingsNew from './pages/SettingsNew';
 import CookingMode from './pages/CookingMode';
 import Household from './pages/Household';
 import AcceptInvitation from './pages/AcceptInvitation';
@@ -83,7 +84,8 @@ function App() {
                       <Route path="/marketplace" element={<Marketplace />} />
                       <Route path="/my-kitchen" element={<MyKitchen />} />
                       <Route path="/cooking/:id" element={<CookingMode />} />
-                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/settings" element={<SettingsNew />} />
+                      <Route path="/settings-old" element={<Settings />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </main>
