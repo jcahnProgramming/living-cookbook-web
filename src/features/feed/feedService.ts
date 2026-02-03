@@ -48,15 +48,16 @@ export async function getFollowingFeed(
       .eq('follower_id', userId);
 
     if (followingError) throw followingError;
-    if (!following || following.length === 0) return [];
 
-    const followingIds = following.map(f => f.following_id);
+    // Build list of user IDs to show posts from (following + self)
+    const followingIds = following?.map(f => f.following_id) || [];
+    const userIdsToShow = [...followingIds, userId]; // Include the user's own posts
 
-    // Get meal posts from followed users
+    // Get meal posts from followed users AND the current user
     const { data: posts, error: postsError } = await supabase
       .from('meal_posts')
       .select('*')
-      .in('user_id', followingIds)
+      .in('user_id', userIdsToShow)
       .eq('visibility', 'public')
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
@@ -140,9 +141,8 @@ export async function getFriendsFeed(
       .eq('follower_id', userId);
 
     if (followingError) throw followingError;
-    if (!following || following.length === 0) return [];
 
-    const followingIds = following.map(f => f.following_id);
+    const followingIds = following?.map(f => f.following_id) || [];
 
     // Get users who follow you back (mutual)
     const { data: followers, error: followersError } = await supabase
@@ -152,15 +152,15 @@ export async function getFriendsFeed(
       .in('follower_id', followingIds);
 
     if (followersError) throw followersError;
-    if (!followers || followers.length === 0) return [];
 
-    const mutualIds = followers.map(f => f.follower_id);
+    const mutualIds = followers?.map(f => f.follower_id) || [];
+    const userIdsToShow = [...mutualIds, userId]; // Include the user's own posts
 
-    // Get meal posts from mutual follows
+    // Get meal posts from mutual follows AND the current user
     const { data: posts, error: postsError } = await supabase
       .from('meal_posts')
       .select('*')
-      .in('user_id', mutualIds)
+      .in('user_id', userIdsToShow)
       .in('visibility', ['public', 'friends'])
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
