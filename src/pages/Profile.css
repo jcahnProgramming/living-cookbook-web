@@ -454,3 +454,35 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* Meal post content */
+.meal-post-content {
+  padding: var(--spacing-3);
+}
+
+.meal-post-recipe-link {
+  text-decoration: none;
+  color: var(--color-text-primary);
+  display: block;
+  margin-bottom: var(--spacing-2);
+}
+
+.meal-post-recipe-link h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  transition: color var(--transition-fast);
+}
+
+.meal-post-recipe-link:hover h4 {
+  color: var(--color-primary-600);
+}
+
+.meal-post-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-elevated);
+  font-size: var(--font-size-3xl);
+  aspect-ratio: 4/3;
+}

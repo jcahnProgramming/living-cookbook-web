@@ -16,6 +16,7 @@ export interface MealPost {
   };
   recipe?: {
     title: string;
+    images?: any;
   };
 }
 
@@ -105,10 +106,27 @@ export async function getUserMealPosts(userId: string): Promise<MealPost[]> {
 
     if (photosError) throw photosError;
 
-    // Combine posts with their photos
+    // Get recipe info for posts that have recipes
+    const recipeIds = posts
+      .filter(p => p.recipe_id)
+      .map(p => p.recipe_id as string);
+
+    let recipes: any[] = [];
+    if (recipeIds.length > 0) {
+      const { data: recipeData, error: recipesError } = await supabase
+        .from('recipes')
+        .select('id, title, images')
+        .in('id', recipeIds);
+
+      if (recipesError) throw recipesError;
+      recipes = recipeData || [];
+    }
+
+    // Combine posts with their photos and recipe info
     const postsWithPhotos = posts.map(post => ({
       ...post,
       photos: photos?.filter(photo => photo.meal_post_id === post.id) || [],
+      recipe: recipes.find(r => r.id === post.recipe_id),
     }));
 
     return postsWithPhotos;

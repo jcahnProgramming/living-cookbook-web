@@ -46,8 +46,8 @@ const FeedPostCard: React.FC<Props> = ({ post }) => {
         </Link>
       </div>
 
-      {/* Photo Grid */}
-      {post.photos && post.photos.length > 0 && (
+      {/* Photo Grid - Show meal photos or recipe image */}
+      {post.photos && post.photos.length > 0 ? (
         <div className={`post-photos photos-${Math.min(post.photos.length, 3)}`}>
           {post.photos.slice(0, 3).map((photo, index) => (
             <div key={photo.id} className="post-photo">
@@ -60,7 +60,27 @@ const FeedPostCard: React.FC<Props> = ({ post }) => {
             </div>
           ))}
         </div>
-      )}
+      ) : post.recipe?.images ? (
+        <div className="post-photos photos-1">
+          <div className="post-photo">
+            {(() => {
+              let imageUrl = null;
+              const images = post.recipe.images;
+              
+              if (Array.isArray(images) && images.length > 0) {
+                const firstImage = images[0];
+                imageUrl = typeof firstImage === 'string' ? firstImage : firstImage?.url;
+              } else if (typeof images === 'object' && images !== null && 'hero' in images) {
+                imageUrl = (images as any).hero?.url;
+              }
+              
+              return imageUrl ? (
+                <img src={imageUrl} alt={post.recipe.title} />
+              ) : null;
+            })()}
+          </div>
+        </div>
+      ) : null}
 
       {/* Caption */}
       {post.caption && (
@@ -71,7 +91,7 @@ const FeedPostCard: React.FC<Props> = ({ post }) => {
 
       {/* Recipe Link */}
       {post.recipe && (
-        <Link to={`/recipes/${post.recipe.id}`} className="post-recipe">
+        <Link to={`/recipe/${post.recipe.id}`} className="post-recipe">
           <div className="recipe-icon">📖</div>
           <div className="recipe-info">
             <div className="recipe-label">Recipe</div>

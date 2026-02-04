@@ -28,7 +28,7 @@ export interface FeedPost extends MealPost {
   recipe?: {
     id: string;
     title: string;
-    image_url?: string;
+    images?: string;
   };
 }
 
@@ -93,7 +93,7 @@ export async function getFollowingFeed(
     if (recipeIds.length > 0) {
       const { data: recipeData, error: recipesError } = await supabase
         .from('recipes')
-        .select('id, title, image_url')
+        .select('id, title, images')
         .in('id', recipeIds);
 
       if (recipesError) throw recipesError;
@@ -190,7 +190,7 @@ export async function getFriendsFeed(
     if (recipeIds.length > 0) {
       const { data: recipeData } = await supabase
         .from('recipes')
-        .select('id, title, image_url')
+        .select('id, title, images')
         .in('id', recipeIds);
       recipes = recipeData || [];
     }
@@ -257,7 +257,7 @@ export async function getExploreFeed(
     if (recipeIds.length > 0) {
       const { data: recipeData } = await supabase
         .from('recipes')
-        .select('id, title, image_url')
+        .select('id, title, images')
         .in('id', recipeIds);
       recipes = recipeData || [];
     }

@@ -240,25 +240,70 @@ const ProfilePage: React.FC = () => {
           <div className="meal-posts-grid">
             {mealPosts.map((post) => (
               <div key={post.id} className="meal-post-card">
-                {post.photos && post.photos.length > 0 && (
-                  <img 
-                    src={post.photos[0].photo_url} 
-                    alt="Meal" 
-                    className="meal-post-image"
-                  />
-                )}
+                {/* Show recipe image if available, otherwise show meal photo */}
+                {(() => {
+                  // Debug: log the post to see structure
+                  if (post.recipe) {
+                    console.log('Recipe data:', post.recipe);
+                    console.log('Recipe images:', post.recipe.images);
+                  }
+                  
+                  // Try to get recipe image from various formats
+                  let recipeImageUrl = null;
+                  if (post.recipe?.images) {
+                    if (Array.isArray(post.recipe.images) && post.recipe.images.length > 0) {
+                      // Array format: [{ url: '...' }] or ['url']
+                      const firstImage = post.recipe.images[0];
+                      recipeImageUrl = typeof firstImage === 'string' ? firstImage : firstImage?.url;
+                    } else if (post.recipe.images.hero?.url) {
+                      // Nested format: { hero: { url: '...' } }
+                      recipeImageUrl = post.recipe.images.hero.url;
+                    }
+                  }
+
+                  if (recipeImageUrl) {
+                    return (
+                      <img 
+                        src={recipeImageUrl} 
+                        alt={post.recipe?.title || 'Meal'} 
+                        className="meal-post-image"
+                      />
+                    );
+                  } else if (post.photos && post.photos.length > 0) {
+                    return (
+                      <img 
+                        src={post.photos[0].photo_url} 
+                        alt="Meal" 
+                        className="meal-post-image"
+                      />
+                    );
+                  } else {
+                    return (
+                      <div className="meal-post-image meal-post-placeholder">
+                        🍽️
+                      </div>
+                    );
+                  }
+                })()}
                 {post.photos && post.photos.length > 1 && (
                   <div className="photo-count">
                     📷 {post.photos.length}
                   </div>
                 )}
-                {post.caption && (
-                  <div className="meal-post-caption">
-                    {post.caption}
+                <div className="meal-post-content">
+                  {post.recipe && (
+                    <Link to={`/recipe/${post.recipe_id}`} className="meal-post-recipe-link">
+                      <h4>{post.recipe.title}</h4>
+                    </Link>
+                  )}
+                  {post.caption && (
+                    <div className="meal-post-caption">
+                      {post.caption}
+                    </div>
+                  )}
+                  <div className="meal-post-date">
+                    {new Date(post.cooked_date).toLocaleDateString()}
                   </div>
-                )}
-                <div className="meal-post-date">
-                  {new Date(post.cooked_date).toLocaleDateString()}
                 </div>
                 {isOwnProfile && (
                   <button
